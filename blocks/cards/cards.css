@@ -1,5 +1,4 @@
 .cards {
   width: calc(100% - (199px * 2));
   padding: 50px 199px 66px 199px;
-  height: 400px;
 }
