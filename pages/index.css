@@ -2,3 +2,5 @@
 @import url(../vendor/normalize.css);
 /* fonts */
 @import url(../vendor/fonts.css);
+/* root */
+@import url(../blocks/root/root.css);
