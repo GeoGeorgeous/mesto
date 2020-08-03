@@ -1,0 +1,7 @@
+.profile {
+  width: calc(100% - (199px * 2));
+  padding: 40px 199px 50px 199px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

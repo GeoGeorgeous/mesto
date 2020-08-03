@@ -3,4 +3,5 @@
   margin: 45px 199px 0 199px;
   min-height: 74px;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
+  box-sizing: border-box;
 }
