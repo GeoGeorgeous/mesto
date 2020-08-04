@@ -1,5 +1,5 @@
 # Проект 4: Mesto Russia
-**[Перейти на сайт](https://geogeorgeous.github.io/mesto/index.html)**
+**[Перейти на сайт](https://geogeorgeous.github.io/mesto/)**
 
 
 ### О чем проект?
