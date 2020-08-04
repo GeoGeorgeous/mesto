@@ -2,3 +2,18 @@
   width: calc(100% - (199px * 2));
   padding: 0 199px 60px 199px;
 }
+
+@media screen and (max-width: 1199.98px) {
+  .footer {
+    margin:0 auto;
+    padding: 0 19px 36px 19px;
+    width: 582px;
+  }
+}
+
+@media screen and (max-width: 767.98px) {
+  .footer {
+    width: calc(100% - (19px * 2));
+    padding: 0 19px 36px 19px;
+  }
+}
