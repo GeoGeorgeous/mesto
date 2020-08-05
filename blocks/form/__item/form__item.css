@@ -1,0 +1,30 @@
+.form__item {
+  width: 100%;
+  height: 28px;
+  outline: none;
+  border: none;
+  border-bottom:1px solid rgba(0, 0, 0, .2);
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  margin-bottom: 30px;
+  transition: border-bottom .5s;
+}
+
+.form__item:last-of-type {
+  margin: 0;
+}
+
+.form__item:focus {
+  border-bottom:1px solid rgba(0, 0, 0, .8);
+}
+
+@media screen and (max-width: 575.98px) {
+  .form__item {
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 20px;
+  }
+}

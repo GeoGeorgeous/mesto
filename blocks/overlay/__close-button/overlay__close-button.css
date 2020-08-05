@@ -1,0 +1,24 @@
+.overlay__close-button {
+  position: fixed;
+  top: calc(50% - 330px / 2 - 37px);
+  left: calc(50% + 430px / 2 - 5px);
+  height: 41px;
+  width: 41px;
+  background-image: url(../../../images/close-icon.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: fill;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer
+}
+
+@media screen and (max-width: 575.98px) {
+  .overlay__close-button {
+    height: 30px;
+    width: 30px;
+    background-size: 41px;
+    top: calc(50% - 330px / 2 - 25px);
+    left: calc(50% + 240px / 2 - 5px);
+  }
+}
