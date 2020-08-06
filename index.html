@@ -86,15 +86,17 @@
     </section>
 
     <div class="popup">
-      <form class="popup__container">
-        <legend class="popup__title">Редактировать профиль</legend>
-        <fieldset class="popup__form">
-          <input class="popup__form-item" type="text" placeholder="Имя" id="input_name">
-          <input class="popup__form-item" type="text" placeholder="Описание профиля" id="input_description">
-        </fieldset>
-        <input class="popup__save-button" type="submit" value="Сохранить">
-      </form>
-      <button class="popup__close-button">
+      <div class="popup__container">
+        <h3 class="popup__title">Редактировать профиль</h3>
+        <form>
+          <fieldset class="popup__form">
+            <input class="popup__form-item" type="text" placeholder="Имя" id="input_name">
+            <input class="popup__form-item" type="text" placeholder="Описание профиля" id="input_description">
+          </fieldset>
+          <input class="popup__save-button" type="submit" value="Сохранить">
+        </form>
+      </div>
+      <button class="popup__close-button"></button>
     </div>
 
   </main>
