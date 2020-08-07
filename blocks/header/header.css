@@ -1,7 +1,7 @@
 .header {
   width: calc(100% - (199px * 2));
-  margin: 45px 199px 0 199px;
-  padding-bottom: 74px;
+  margin: 0 auto;
+  padding: 45px 0 40px 0;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
   box-sizing: border-box;
 }
@@ -10,15 +10,15 @@
   .header {
     margin: 0 auto;
     width: 582px;
-    padding: 28px 0 30px 27px;
+    padding: 31px 0 34px 0;
   }
 }
 
 @media screen and (max-width: 767.98px) {
   .header {
-    margin: 0;
+    margin: 0 auto;
     width: 100%;
-    padding: 28px 0 30px 27px;
+    padding: 28px 0 31px 27px;
   }
 }
 
