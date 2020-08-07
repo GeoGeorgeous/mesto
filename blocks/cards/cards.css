@@ -1,20 +1,17 @@
 .cards {
   width: calc(100% - (199px * 2));
-  padding: 50px 199px 66px 199px;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1199.98px) {
   .cards {
-    margin: 0 auto;
     width: 582px;
-    padding: 36px 0 48px 0;
   }
 }
 
 @media screen and (max-width: 767.98px) {
   .cards {
     width: calc(100% - (19px * 2));
-    padding: 36px 19px 48px 19px;
   }
 }
 
