@@ -10,7 +10,12 @@
   object-fit: fill;
   border: 0;
   background-color: transparent;
-  cursor: pointer
+  cursor: pointer;
+  transition: opacity .25s;
+}
+
+.popup__close-button:hover {
+  opacity: .8;
 }
 
 @media screen and (max-width: 575.98px) {
