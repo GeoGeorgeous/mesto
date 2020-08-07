@@ -1,7 +1,7 @@
 .popup__close-button {
-  position: relative;
-  top: -382px;
-  left: 426px;
+  position: absolute;
+  top: calc(50% - 208px);
+  left: calc(50% + 211px);
   height: 41px;
   width: 41px;
   background-image: url(../../../images/close-icon.svg);
@@ -23,7 +23,7 @@
     height: 30px;
     width: 30px;
     background-size: 41px;
-    top: -327px;
-    left: 236px;
+    top: calc(50% - 175px);
+    left: calc(50% + 116px);
   }
 }
