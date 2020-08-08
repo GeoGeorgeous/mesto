@@ -31,6 +31,7 @@ function formSubmitHandler (evt) {
   evt.preventDefault();
   accountName.textContent = input_accountName.value;
   accountDescription.textContent = input_accountDescription.value;
+  hidePopUp();
 }
 
 editButton.addEventListener('click', showPopUp);
