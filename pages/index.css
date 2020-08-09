@@ -4,6 +4,7 @@
 @import url(../vendor/fonts.css);
 /* root */
 @import url(../blocks/root/root.css);
+@import url(../blocks/root/__main/root__main.css);   /* used for sticky footer */
 /* logo */
 @import url(../blocks/logo/logo.css);
 /* header */
