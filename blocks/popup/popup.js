@@ -11,14 +11,14 @@ let accountName = document.querySelector('.profile__name');
 // Account Description
 let accountDescription = document.querySelector('.profile__description');
 // Input field for name
-let input_accountName = document.querySelector('.popup__form-item_input_name');
+let inputAccountName = document.querySelector('.popup__form-item_input_name');
 // Input field for desc
-let input_accountDescription = document.querySelector('.popup__form-item_input_description');
+let inputAccountDescription = document.querySelector('.popup__form-item_input_description');
 
 function showPopUp() {
   // get current account name and description and put in.
-  input_accountName.value = accountName.textContent;
-  input_accountDescription.value = accountDescription.textContent;
+  inputAccountName.value = accountName.textContent;
+  inputAccountDescription.value = accountDescription.textContent;
   // show popup
   popUp.classList.add('popup_opened');
 }
@@ -29,8 +29,8 @@ function hidePopUp() {
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
-  accountName.textContent = input_accountName.value;
-  accountDescription.textContent = input_accountDescription.value;
+  accountName.textContent = inputAccountName.value;
+  accountDescription.textContent = inputAccountDescription.value;
   hidePopUp();
 }
 
