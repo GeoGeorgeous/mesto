@@ -37,7 +37,7 @@
             </div>
           </li>
         </template>
-        
+
       </ul>
     </section>
 
@@ -47,7 +47,19 @@
     <p class="footer__copyright">Георгий Горчев &copy; 2020 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_target_add-place">
+    <form class="popup__container" name="popupForm">
+      <h3 class="popup__title">Новое место</h3>
+        <fieldset class="popup__form">
+          <input class="popup__form-item popup__form-item_input_name" type="text" placeholder="Имя" name="name" required>
+          <input class="popup__form-item popup__form-item_input_description" type="text" placeholder="Описание профиля" name="description" required>
+        </fieldset>
+        <button class="popup__save-button" type="submit">Сохранить</button>
+        <button class="popup__close-button" type="reset" aria-label="Закрыть"></button>
+    </form>
+  </div>
+
+  <div class="popup popup_target_edit-account">
     <form class="popup__container" name="popupForm">
       <h3 class="popup__title">Редактировать профиль</h3>
         <fieldset class="popup__form">
