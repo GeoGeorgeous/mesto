@@ -49,3 +49,11 @@ function initCards(arr) {
 // initial default cards
 initCards(initialCards);
 
+function addCard(title, url) {
+  const card = cardTemplate.cloneNode(true);
+  card.querySelector('.card__title').textContent = title;
+  card.querySelector('.card__image').src = url;
+  card.querySelector('.card__image').alt = title;
+  cardsContainer.prepend(card);
+}
+

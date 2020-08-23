@@ -57,10 +57,12 @@ function closePlacePopUp() {
 
 function placeFormSubmitHandler (evt) {
   evt.preventDefault();
+  addCard(placeInputTitle.value, placeInputLink.value);
   popUpToggle(placePopUp);
 }
 
 placeAddButton.addEventListener('click', showPlacePopUp);
 placeCloseButton.addEventListener('click', closePlacePopUp);
 placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
+
 
