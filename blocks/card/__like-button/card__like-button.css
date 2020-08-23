@@ -14,7 +14,7 @@
 }
 
 .card__like-button:hover {
-  opacity: .3;
+  opacity: .6;
 }
 
 .card__like-button:focus {

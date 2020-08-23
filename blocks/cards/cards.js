@@ -36,4 +36,10 @@ likeButton.forEach(function (likebtn) {
   });
 })
 
+const deleteButton = cardsContainer.querySelectorAll('.card__delete-button'); // array with all delete buttons
 
+deleteButton.forEach(function (deletebtn) {
+  deletebtn.addEventListener('click', function () {
+    deletebtn.parentElement.remove();
+  });
+})
