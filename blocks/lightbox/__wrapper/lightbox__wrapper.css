@@ -1,4 +1,5 @@
-.fullscreen-gallery__wrapper {
+.lightbox__wrapper {
+  margin: 0 auto;
   position: relative;
   max-width: 75vw;
   max-height: 75vh;
@@ -6,4 +7,5 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  /* overflow: hidden; */
 }

@@ -1,3 +1,16 @@
+lightbox;
+Новые карточки нельзя удалить или открыть в лайтбоксе;
+слишком большие фотографии уезжают в лайтбоксе;
+плавное появление попапов;
+
+
+
+
+
+
+
+
+
 const cardImage = document.querySelectorAll('.card__image');
 const fullScreenPopUp = document.querySelector('.fullscreen-gallery');
 const fullScreenPopUpCloseBtn = document.querySelector('.fullscreen-gallery__close-button');
@@ -12,7 +25,7 @@ function toggleFullScreen() {
 cardImage.forEach(function (el) {
   el.addEventListener('click',function (event) {
     let caption = event.target.parentElement.querySelector('.card__title').textContent // find the right caprion
-    let imgSrc = event.target.src // find the right image src
+    let imgSrc = event.target.src // find the right image source
     fullScreenPopUp.querySelector('.fullscreen-gallery__caption').textContent = caption;
     fullScreenPopUp.querySelector('.fullscreen-gallery__image').src = imgSrc;
     fullScreenPopUp.querySelector('.fullscreen-gallery__image').alt = caption;

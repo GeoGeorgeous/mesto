@@ -1,4 +1,4 @@
-.fullscreen-gallery__close-button {
+.lightbox__close-button {
   position: absolute;
   top: -40px;
   right: -40px;
@@ -14,16 +14,16 @@
   transition: opacity .25s;
 }
 
-.fullscreen-gallery__close-button:hover {
+.lightbox__close-button:hover {
   opacity: .8;
 }
 
-.fullscreen-gallery__close-button:focus {
+.lightbox__close-button:focus {
   outline: 0;
 }
 
 @media screen and (max-width: 575.98px) {
-  .fullscreen-gallery__close-button {
+  .lightbox__close-button {
     background-size: 40px;
     top: -40px;
     right: -40px;

@@ -56,8 +56,13 @@ function closePlacePopUp() {
 
 function placeFormSubmitHandler (evt) {
   evt.preventDefault();
-  addCard(placeInputTitle.value, placeInputLink.value); // add new card (watch cards.js)
+  let newCard = {};
+  newCard.name = placeInputTitle.value;
+  newCard.link = placeInputLink.value;
+  console.log(createCard(newCard))
+  renderCard(createCard(newCard)); // add new card (watch cards.js)
   popUpToggle(placePopUp);
+
 }
 
 placeAddButton.addEventListener('click', showPlacePopUp);
