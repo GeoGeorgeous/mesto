@@ -40,6 +40,14 @@
 @import url(../blocks/popup/__form-item/popup__form-item.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+/* fullscreen gallery */
+@import url(../blocks/fullscreen-gallery/fullscreen-gallery.css);
+@import url(../blocks/fullscreen-gallery/__wrapper/fullscreen-gallery__wrapper.css);
+@import url(../blocks/fullscreen-gallery/__image/fullscreen-gallery__image.css);
+@import url(../blocks/fullscreen-gallery/__caption/fullscreen-gallery__caption.css);
+@import url(../blocks/fullscreen-gallery/__close-button/fullscreen-gallery__close-button.css);
+@import url(../blocks/fullscreen-gallery/_opened/fullscreen-gallery_opened.css);
+
 
 
 

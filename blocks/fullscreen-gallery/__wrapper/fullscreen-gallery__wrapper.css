@@ -1,0 +1,9 @@
+.fullscreen-gallery__wrapper {
+  position: relative;
+  max-width: 75vw;
+  max-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
