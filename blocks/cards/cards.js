@@ -1,35 +1,8 @@
-// array with names / links for default cards
-const initialCards = [
-  {
-      name: 'Покровка',
-      link: './images/card__Pokrovka.jpg'
-  },
-  {
-      name: 'ЦУМ',
-      link: './images/card__TeatralnyjProezd.jpg'
-  },
-  {
-      name: 'Москва-сити',
-      link: './images/card__MoscowCity.jpg'
-  },
-  {
-      name: 'Мясницкая',
-      link: './images/card__Myasnickaya.jpg'
-  },
-  {
-      name: 'Чертаново',
-      link: './images/card__Chertanovo.jpg'
-  },
-  {
-      name: 'метро Добрынинская',
-      link: './images/card__Dobryninskaya.jpg'
-  }
-];
-
-const cardsContainer = document.querySelector('.cards__items'); // get the list of all the cards on the page
-const cardTemplate = document.querySelector('#card').content; // get the card template
+const cardsContainer = document.querySelector('.cards__items'); // get container for all cards (ul)
+const cardTemplate = document.querySelector('#card').content; // get the card template (li)
 
 // this function gets an array (arr) and creates a new card using cardTemplate
+// arr that we use stored in /blocks/cards/initialCards.js
 function initCards(arr) {
   arr.forEach(element => {
     // clone the template content
