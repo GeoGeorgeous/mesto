@@ -46,7 +46,6 @@ accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
 
 // placePopUp
 
-
 function showPlacePopUp() {
   popUpToggle(placePopUp);
 }
@@ -57,7 +56,7 @@ function closePlacePopUp() {
 
 function placeFormSubmitHandler (evt) {
   evt.preventDefault();
-  addCard(placeInputTitle.value, placeInputLink.value);
+  addCard(placeInputTitle.value, placeInputLink.value); // add new card (watch cards.js)
   popUpToggle(placePopUp);
 }
 

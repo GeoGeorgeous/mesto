@@ -26,11 +26,8 @@ const initialCards = [
   }
 ];
 
-// get the list of all the cards on the page
-const cardsContainer = document.querySelector('.cards__items');
-// get the card template
-const cardTemplate = document.querySelector('#card').content;
-
+const cardsContainer = document.querySelector('.cards__items'); // get the list of all the cards on the page
+const cardTemplate = document.querySelector('#card').content; // get the card template
 
 // this function gets an array (arr) and creates a new card using cardTemplate
 function initCards(arr) {
@@ -49,6 +46,7 @@ function initCards(arr) {
 // initial default cards
 initCards(initialCards);
 
+// add new card via popup (used in popup.js)
 function addCard(title, url) {
   const card = cardTemplate.cloneNode(true);
   card.querySelector('.card__title').textContent = title;
@@ -56,4 +54,13 @@ function addCard(title, url) {
   card.querySelector('.card__image').alt = title;
   cardsContainer.prepend(card);
 }
+
+const likeButton = cardsContainer.querySelectorAll('.card__like-button'); // array with all like buttons
+
+likeButton.forEach(function (likebtn) {
+  likebtn.addEventListener('click', function () {
+    likebtn.classList.toggle('card__like-button_active');
+  });
+})
+
 
