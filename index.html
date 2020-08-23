@@ -28,60 +28,16 @@
     <section class="cards">
       <ul class="cards__items">
 
-        <!-- Покровка -->
-        <li class="card">
-          <img class="card__image" src="./images/card__Pokrovka.jpg" alt="Покровка">
-          <div class="card__content">
-            <h2 class="card__title">Покровка</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <!-- ЦУМ -->
-        <li class="card">
-          <img class="card__image" src="./images/card__TeatralnyjProezd.jpg" alt="Молл ЦУМ на Театральном проезде">
-          <div class="card__content">
-            <h2 class="card__title">ЦУМ</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <!-- Москва-сити -->
-        <li class="card">
-          <img class="card__image" src="./images/card__MoscowCity.jpg" alt="Moscow City">
-          <div class="card__content">
-            <h2 class="card__title">Москва-Сити</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <!-- Мясницкая -->
-        <li class="card">
-          <img class="card__image" src="./images/card__Myasnickaya.jpg" alt="Мясницкая улица">
-          <div class="card__content">
-            <h2 class="card__title">Мясницкая</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <!-- Чертаново -->
-        <li class="card">
-          <img class="card__image" src="./images/card__Chertanovo.jpg" alt="Район Чертаново">
-          <div class="card__content">
-            <h2 class="card__title">Чертаново</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
-        <!-- Покровка -->
-        <li class="card">
-          <img class="card__image" src="./images/card__Dobryninskaya.jpg" alt="Площадь у метро Добрынинская">
-          <div class="card__content">
-            <h2 class="card__title">метро Добрынинская</h2>
-            <button class="card__like-button" type="button"></button>
-          </div>
-        </li>
-
+        <template id="card">
+          <li class="card">
+            <img class="card__image" src="">
+            <div class="card__content">
+              <h2 class="card__title"></h2>
+              <button class="card__like-button" type="button"></button>
+            </div>
+          </li>
+        </template>
+        
       </ul>
     </section>
 
@@ -103,6 +59,7 @@
     </form>
   </div>
 
+<script src="./blocks/cards/cards.js"></script>
 <script src="./blocks/popup/popup.js"></script>
 </body>
 </html>
