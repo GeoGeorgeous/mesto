@@ -6,3 +6,12 @@
 .popup__form-item-group:last-of-type {
   margin: 0;
 }
+
+@media screen and (max-width: 575.98px) {
+  .popup__form-item-group {
+    margin-bottom: 20px;
+  }
+  .popup__form-item-group:last-of-type {
+    margin-bottom: 36px;
+  }
+}
