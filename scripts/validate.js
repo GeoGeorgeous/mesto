@@ -22,7 +22,6 @@ const checkInputValidity = function(formElement, inputElement, {errorClass, ...r
 const showInputError = function(formElement, inputElement, errorMessage, errorClass) {
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
   errorElement.textContent = errorMessage;
-  debugger
   inputElement.classList.add(errorClass);
 };
 

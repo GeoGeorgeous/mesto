@@ -33,7 +33,7 @@ const accountCloseButton = accountPopUp.querySelector('.popup__close-button'); /
 const accountSaveButton = accountPopUp.querySelector('.popup__container'); // Save Account popUp button
 // Form – Account
 const accountForm = document.forms.account;
-const accountInputName = accountForm.elements.name;
+const accountInputName = accountForm.elements.username;
 const accountInputDesc = accountForm.elements.description;
 
 // Pop Up — Place
@@ -87,7 +87,8 @@ function showAccountPopUp() {
   accountInputName.value = accountName.textContent;
   accountInputDesc.value = accountDescription.textContent;
   // toggle save button
-  toggleButtonState(Array.from(accountForm.querySelectorAll('.popup__form-item')), accountForm.querySelector('.popup__save-button'));
+  toggleButtonState(Array.from(accountForm.querySelectorAll('.popup__form-item')), accountForm.querySelector('.popup__save-button'),
+  'popup__save-button_inactive');
   // Additional Closers
   addPopUpOutOfTargetCloser(accountPopUp);
   addPopUpEscapeCloser(accountPopUp);
