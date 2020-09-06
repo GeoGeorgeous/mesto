@@ -170,6 +170,12 @@ function placeFormSubmitHandler (evt) {
 }
 
 placeAddButton.addEventListener('click', () => {
+  // Чистая форма при открытии
+  placeInputTitle.value = '';
+  placeInputLink.value = '';
+  // Пустой инпут = неактивная кнопка в начале
+  toggleButtonState(Array.from(placeForm.querySelectorAll('.popup__form-item')), placeForm.querySelector('.popup__save-button'),
+  'popup__save-button_inactive');
   showPopUp(placePopUp);
 }); // 4.2
 
