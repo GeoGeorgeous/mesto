@@ -1,4 +1,8 @@
-// Initial Cards — Data
+/*
+---------- 1. Глобальные переменные ----------
+*/
+
+// 1.1 Объект с дефолтными карточками:
 const initialCards = [
   {
       name: 'Покровка',
@@ -26,173 +30,213 @@ const initialCards = [
   }
 ];
 
-// Pop Up — Account
-const accountPopUp = document.querySelector('.popup[data-type="account"]'); // Edit Account popUp
-const accountEditButton = document.querySelector('.profile__edit-button'); // Edit Account button
-const accountCloseButton = accountPopUp.querySelector('.popup__close-button'); // Close Account popUp button
-const accountSaveButton = accountPopUp.querySelector('.popup__container'); // Save Account popUp button
-// Form – Account
+// 1.2 Аккаунт — Модальное окно
+const accountPopUp = document.querySelector('.popup[data-type="account"]'); // [Аккаунт] Модальное окно
+const accountEditButton = document.querySelector('.profile__edit-button'); // [Аккаунт] Кнопка редактирования профиля
+const accountSaveButton = accountPopUp.querySelector('.popup__container'); // [Аккаунт] Кнопка субмита
+// 1.3 Аккаунт — Форма
 const accountForm = document.forms.account;
 const accountInputName = accountForm.elements.username;
 const accountInputDesc = accountForm.elements.description;
 
-// Pop Up — Place
-const placePopUp = document.querySelector('.popup[data-type="place"]'); // Add Place popUp
-const placeAddButton = document.querySelector('.profile__add-button'); // Add Place button
-const placeCloseButton = placePopUp.querySelector('.popup__close-button'); // Close Add Place popUp button
-const placeSaveButton = placePopUp.querySelector('.popup__container'); // Save Add Place popUp button
-// Form —  Place
-const placeForm = document.forms.place;
-const placeInputTitle = placeForm.elements.title;
-const placeInputLink = placeForm.elements.link;
+// 1.4 Место — Модальное окно
+const placePopUp = document.querySelector('.popup[data-type="place"]'); // [Место] Модальное окно
+const placeAddButton = document.querySelector('.profile__add-button'); // [Место] Кнопка добавления нового места
+const placeSaveButton = placePopUp.querySelector('.popup__container'); // [Место] Кнопка субмита
+// 1.5 Место — Форма
+const placeForm = document.forms.place; // Форма Место
+const placeInputTitle = placeForm.elements.title; // Инпут - название места
+const placeInputLink = placeForm.elements.link; // Инпут - ссылка на изображение
 
-// Elements — Profile Info
-const accountName = document.querySelector('.profile__name'); // Account name
-const accountDescription = document.querySelector('.profile__description'); // Account Description
+// 1.6 Имя и Описание профиля
+const accountName = document.querySelector('.profile__name'); // Имя профиля
+const accountDescription = document.querySelector('.profile__description'); // Описание Профиля
 
-// PopUp functionality
+// 1.7 LightBox
+const lightbox = document.querySelector('.lightbox'); // lightbox
+const lightboxCloseBtn = document.querySelector('.lightbox__close-button'); // кнопка закрытия лайтбокса
 
-function addPopUpOutOfTargetCloser(popup) {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target === popup){
-      closePopUp(popup);
-    }
-  })
+
+
+
+
+/*
+----------  2. Функциональность модальных окон ----------
+*/
+
+/*
+// 2.1 Коллбэки для слушателей:
+
+crossOverlayExit и ESCExit — оба работают с попапами и лайтбоксами, определяя, содержит ли
+event.target класс открытого попапа или лайтбокса и в зависимости от этого определяют,
+что закрывать.
+*/
+
+function crossOverlayExit(evt) {
+  // 2.1.1 Коллбэк, если нажали на оверлей или на крестик: находит открытый попап и подбираем ему нужный модификатор закрытия
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')){
+    const currentPopUp = document.querySelector('.popup_opened');
+    closePopUp(currentPopUp, 'popup_opened');
+  } // Если открыли лайтбокс, то тоже будет работать:
+  if (evt.target.classList.contains('lightbox') || evt.target.classList.contains('lightbox__close-button')){
+    const currentLightbox = document.querySelector('.lightbox_opened');
+    closePopUp(currentLightbox, 'lightbox_opened');
+  }
+};
+
+function ESCExit(evt) {
+  // 2.1.2 Коллбэк, если нажали ESC: находит открытый попап и закрывает его
+  if ( (evt.key === 'Escape') && (!lightbox.classList.contains('lightbox_opened')) ) {
+    const currentPopUp = document.querySelector('.popup_opened');
+    closePopUp(currentPopUp, 'popup_opened');
+  } else if (evt.key === 'Escape') {
+    const currentLightbox = document.querySelector('.lightbox_opened');
+    closePopUp(currentLightbox, 'lightbox_opened');
+  }
 }
 
-function addPopUpEscapeCloser(popup){
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Escape'){
-      closePopUp(popup);
-    }
-  })
-}
-
-const closePopUp = (popup) => {
-  popup.classList.remove('popup_opened');
-}
+/*
+// 2.2 Открытие и закрытие модальных окон:
+*/
 
 const showPopUp = (popup) => {
+  // 2.2.1 Получает модальное окно как параметр,
+  // Открывает его и навешивает слушатели
   popup.classList.add('popup_opened');
+  popup.addEventListener('click', crossOverlayExit);
+  document.addEventListener('keyup', ESCExit);
 }
 
-const popUpToggle = (popup) => {
-  popup.classList.toggle('popup_opened');
+
+const closePopUp = (popup, modificator = 'popup_opened') => {
+  // 2.2.2 Закрывает модальное окно / лайтбокс и снимает все слушатели
+  // modificator — это класс, который отвечает за открытие попапа или лайтбокса.
+  popup.classList.remove(modificator);
+  popup.removeEventListener('click', crossOverlayExit);
+  document.removeEventListener('keyup', ESCExit);
 }
 
-// Account PopUp
 
+
+
+
+/*
+----------  3. Модальное окно [Аккаунт] ----------
+*/
+
+// 3.1 Функция открытия модального окна Аккаунт
 function showAccountPopUp() {
-  // get current account name and description and put them into input
+  // 1. Получает актуальное имя пользователя и описание профиля
+  // и вставляет эти данные в инпуты:
   accountInputName.value = accountName.textContent;
   accountInputDesc.value = accountDescription.textContent;
-  // toggle save button
+  // 2. Переключает начальное положение кнопки сабмита в активное,
+  // так как изначально инпуты уже валидны:
   toggleButtonState(Array.from(accountForm.querySelectorAll('.popup__form-item')), accountForm.querySelector('.popup__save-button'),
   'popup__save-button_inactive');
-  // Additional Closers
-  addPopUpOutOfTargetCloser(accountPopUp);
-  addPopUpEscapeCloser(accountPopUp);
-  // toggle (show) popup
-  popUpToggle(accountPopUp);
+  // 3. Открывает модальное окно:
+  showPopUp(accountPopUp);
 }
 
-function closeAccountPopUp() {
-  popUpToggle(accountPopUp);
-}
-
+// 3.2 Обработчик сабмита формы Аккаунт
 function accountFormSubmitHandler (evt) {
-  evt.preventDefault();
+  evt.preventDefault(); // Избавляемся от стандартного поведения
+  // Добавляем на сайт новые значения имени и описания
   accountName.textContent = accountInputName.value;
   accountDescription.textContent = accountInputDesc.value;
-  popUpToggle(accountPopUp);
+  closePopUp(accountPopUp); // Закрываем форму
 }
 
-accountEditButton.addEventListener('click', showAccountPopUp);
-accountCloseButton.addEventListener('click', closeAccountPopUp);
-accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
+accountEditButton.addEventListener('click', showAccountPopUp); // 3.3
+accountSaveButton.addEventListener('submit', accountFormSubmitHandler); // 3.4
 
 
-// Place PopUp
 
-function showPlacePopUp() {
-// Additional Closers
-  addPopUpOutOfTargetCloser(placePopUp);
-  addPopUpEscapeCloser(placePopUp);
-  popUpToggle(placePopUp);
-}
 
-function closePlacePopUp() {
-  popUpToggle(placePopUp);
-}
 
+/*
+----------  4. Модальное окно [Место] ----------
+*/
+
+
+// 4.1 Обработчик сабмита формы Аккаунт
 function placeFormSubmitHandler (evt) {
-  evt.preventDefault();
-  const newCard = {};
+  evt.preventDefault(); // Избавляемся от стандартного поведения
+  const newCard = {}; // Новая карточка Место
   newCard.name = placeInputTitle.value;
   newCard.link = placeInputLink.value;
-  console.log(createCard(newCard))
-  renderCard(createCard(newCard)); // add new card (watch cards.js)
-  popUpToggle(placePopUp);
-
+  renderCard(createCard(newCard));
+  closePopUp(placePopUp); // Закрываем форму
 }
 
-placeAddButton.addEventListener('click', showPlacePopUp);
-placeCloseButton.addEventListener('click', closePlacePopUp);
-placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
+placeAddButton.addEventListener('click', () => {
+  showPopUp(placePopUp);
+}); // 4.2
 
-// Lightbox functionality
+placeSaveButton.addEventListener('submit', placeFormSubmitHandler); // 4.3
 
-const lightbox = document.querySelector('.lightbox');
-const lightboxCloseBtn = document.querySelector('.lightbox__close-button');
 
-function addLightbox(card) {
-  const cardImage = card.querySelector('.card__image');
-  cardImage.addEventListener('click',function (event) {
-    const caption = event.target.parentElement.querySelector('.card__title').textContent // find the right caprion
-    const imgSrc = event.target.src // find the right image source
-    let lightboxCaption = lightbox.querySelector('.lightbox__caption');
+
+
+
+/*
+----------  5. Функциональность LightBox ----------
+*/
+
+// 5.1 Функция принимает 3 параметра: название места, ссылку на изображение с местом и элемент картинки
+// и навешивает EventListener -> открытие лайтбокса при клике на картинку
+// -> вставляет нужное изображение, название и аттрибуты в лайтбокс.
+function addLightbox(title, link, cardImage) {
+  cardImage.addEventListener('click', (evt) => {
+    const lightboxCaption = lightbox.querySelector('.lightbox__caption');
     const lightboxImage = lightbox.querySelector('.lightbox__image');
-    lightboxCaption.textContent = caption;
-    lightboxImage.src = imgSrc;
-    lightboxImage.alt = caption;
-    toggleFullScreen()
-  })}
-
-
-function toggleFullScreen() {
-  lightbox.classList.toggle('lightbox_opened');
+    lightboxCaption.textContent = title;
+    lightboxImage.src = link;
+    lightboxImage.alt = title;
+    showLightbox()
+  })
 }
 
-lightboxCloseBtn.addEventListener('click',toggleFullScreen);
+function showLightbox() {
+  // 5.2 Получает модальное окно как параметр,
+  // Открывает его и навешивает слушатели
+  lightbox.classList.toggle('lightbox_opened');
+  lightbox.addEventListener('click', crossOverlayExit);
+  document.addEventListener('keyup', ESCExit);
+}
 
-// Cards functionality
 
-const cardsContainer = document.querySelector('.cards__items'); // get container for all cards (ul)
-const cardTemplate = document.querySelector('#card').content; // get the card template (li)
 
-function createCard(array) {
-  // function gets an array and return a new card (HTML) with
-  // title, image source, alt, likes actions, delete actions and lightbox
-  //
-  // array should contain array.name and array.link
-  //
-  // it does not add new card into DOM
+
+
+/*
+----------  6. Функциональность Карточек ----------
+*/
+
+function createCard(newCard) {
+  // 6.1 Функция создает новую карточку из Template
+  const cardTemplate = document.querySelector('#card').content;
   const card = cardTemplate.cloneNode(true);
-  card.querySelector('.card__title').textContent = array.name;
-  card.querySelector('.card__image').src = array.link;
-  card.querySelector('.card__image').alt = array.name;
-  card.querySelector('.card__like-button').addEventListener('click', function (event) {
+  let cardTitle = card.querySelector('.card__title');
+  const cardImage = card.querySelector('.card__image');
+  const cardLikeBtn = card.querySelector('.card__like-button');
+  cardTitle.textContent = newCard.name;
+  cardImage.src = newCard.link;
+  cardImage.alt = newCard.name;
+  cardLikeBtn.addEventListener('click', function (event) {
     event.target.classList.toggle('card__like-button_active');
   })
   card.querySelector('.card__delete-button').addEventListener('click', function (event) {
     event.target.parentElement.remove();
   })
-  addLightbox(card);
+  // Добавляем функциональность лайтбокса этой карточке
+  addLightbox(newCard.name, newCard.link, cardImage);
   return card;
 }
 
 function renderCard(card, method = 'prepend') {
-  // add card into DOM
+  // 6.2 Добавляем карточки в DOM
+  const cardsContainer = document.querySelector('.cards__items'); // get container for all cards (ul)
   if (method === 'prepend') {
     cardsContainer.prepend(card);
   } else {
@@ -201,7 +245,7 @@ function renderCard(card, method = 'prepend') {
 }
 
 initialCards.forEach(function(element) {
-  // create and render default cards ("from the box") into the page
-  // cards are taken from initialCards.js
+  // 6.3 Создадим и добавим в DOM "карточки из коробки"
+  // карточки берем из объекта initialCards
   renderCard(createCard(element), 'append');
 });
