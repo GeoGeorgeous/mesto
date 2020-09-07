@@ -53,11 +53,10 @@ const accountName = document.querySelector('.profile__name'); // Имя проф
 const accountDescription = document.querySelector('.profile__description'); // Описание Профиля
 
 // 1.7 LightBox
-const lightbox = document.querySelector('.lightbox'); // lightbox
-const lightboxCloseBtn = document.querySelector('.lightbox__close-button'); // кнопка закрытия лайтбокса
+const lightbox = document.querySelector('.popup[data-type="lightbox"]'); // lightbox
 
-
-
+accountInputName.value = accountName
+accountInputDesc.value =  accountDescription
 
 
 /*
@@ -76,42 +75,41 @@ function crossOverlayExit(evt) {
   // 2.1.1 Коллбэк, если нажали на оверлей или на крестик: находит открытый попап и подбираем ему нужный модификатор закрытия
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')){
     const currentPopUp = document.querySelector('.popup_opened');
-    closePopUp(currentPopUp, 'popup_opened');
-  } // Если открыли лайтбокс, то тоже будет работать:
-  if (evt.target.classList.contains('lightbox') || evt.target.classList.contains('lightbox__close-button')){
-    const currentLightbox = document.querySelector('.lightbox_opened');
-    closePopUp(currentLightbox, 'lightbox_opened');
+    closePopUp(currentPopUp);
   }
 };
 
 function ESCExit(evt) {
   // 2.1.2 Коллбэк, если нажали ESC: находит открытый попап и закрывает его
-  if ( (evt.key === 'Escape') && (!lightbox.classList.contains('lightbox_opened')) ) {
+  if ( (evt.key === 'Escape') ) {
     const currentPopUp = document.querySelector('.popup_opened');
-    closePopUp(currentPopUp, 'popup_opened');
-  } else if (evt.key === 'Escape') {
-    const currentLightbox = document.querySelector('.lightbox_opened');
-    closePopUp(currentLightbox, 'lightbox_opened');
+    closePopUp(currentPopUp);
   }
 }
+
+
 
 /*
 // 2.2 Открытие и закрытие модальных окон:
 */
 
 const showPopUp = (popup) => {
-  // 2.2.1 Получает модальное окно как параметр,
-  // Открывает его и навешивает слушатели
+  // 2.2.1 Получает модальное окно как параметр, навешивает слушатели и открывает его
+  if (popup === accountPopUp) {
+    accountInputName.value = accountName.textContent;
+    accountInputDesc.value = accountDescription.textContent;
+  }
+
+
   popup.classList.add('popup_opened');
   popup.addEventListener('click', crossOverlayExit);
   document.addEventListener('keyup', ESCExit);
 }
 
 
-const closePopUp = (popup, modificator = 'popup_opened') => {
-  // 2.2.2 Закрывает модальное окно / лайтбокс и снимает все слушатели
-  // modificator — это класс, который отвечает за открытие попапа или лайтбокса.
-  popup.classList.remove(modificator);
+const closePopUp = (popup) => {
+  // 2.2.2 Закрывает модальное окно и снимает все слушатели
+  popup.classList.remove('popup_opened');
   popup.removeEventListener('click', crossOverlayExit);
   document.removeEventListener('keyup', ESCExit);
 }
@@ -124,21 +122,7 @@ const closePopUp = (popup, modificator = 'popup_opened') => {
 ----------  3. Модальное окно [Аккаунт] ----------
 */
 
-// 3.1 Функция открытия модального окна Аккаунт
-function showAccountPopUp() {
-  // 1. Получает актуальное имя пользователя и описание профиля
-  // и вставляет эти данные в инпуты:
-  accountInputName.value = accountName.textContent;
-  accountInputDesc.value = accountDescription.textContent;
-  // 2. Переключает начальное положение кнопки сабмита в активное,
-  // так как изначально инпуты уже валидны:
-  toggleButtonState(Array.from(accountForm.querySelectorAll('.popup__form-item')), accountForm.querySelector('.popup__save-button'),
-  'popup__save-button_inactive');
-  // 3. Открывает модальное окно:
-  showPopUp(accountPopUp);
-}
-
-// 3.2 Обработчик сабмита формы Аккаунт
+// 3.1 Обработчик сабмита формы Аккаунт
 function accountFormSubmitHandler (evt) {
   evt.preventDefault(); // Избавляемся от стандартного поведения
   // Добавляем на сайт новые значения имени и описания
@@ -147,8 +131,10 @@ function accountFormSubmitHandler (evt) {
   closePopUp(accountPopUp); // Закрываем форму
 }
 
-accountEditButton.addEventListener('click', showAccountPopUp); // 3.3
-accountSaveButton.addEventListener('submit', accountFormSubmitHandler); // 3.4
+accountEditButton.addEventListener('click', () => {
+  showPopUp(accountPopUp);
+}); // 3.2
+accountSaveButton.addEventListener('submit', accountFormSubmitHandler); // 3.3
 
 
 
@@ -159,7 +145,7 @@ accountSaveButton.addEventListener('submit', accountFormSubmitHandler); // 3.4
 */
 
 
-// 4.1 Обработчик сабмита формы Аккаунт
+// 4.1 Обработчик сабмита формы Место
 function placeFormSubmitHandler (evt) {
   evt.preventDefault(); // Избавляемся от стандартного поведения
   const newCard = {}; // Новая карточка Место
@@ -167,15 +153,11 @@ function placeFormSubmitHandler (evt) {
   newCard.link = placeInputLink.value;
   renderCard(createCard(newCard));
   closePopUp(placePopUp); // Закрываем форму
+  disableBtn(evt.target.querySelector('.popup__save-button'), config.inactiveButtonClass);
+  placeForm.reset(); // Чистим Форму
 }
 
 placeAddButton.addEventListener('click', () => {
-  // Чистая форма при открытии
-  placeInputTitle.value = '';
-  placeInputLink.value = '';
-  // Пустой инпут = неактивная кнопка в начале
-  toggleButtonState(Array.from(placeForm.querySelectorAll('.popup__form-item')), placeForm.querySelector('.popup__save-button'),
-  'popup__save-button_inactive');
   showPopUp(placePopUp);
 }); // 4.2
 
@@ -199,18 +181,9 @@ function addLightbox(title, link, cardImage) {
     lightboxCaption.textContent = title;
     lightboxImage.src = link;
     lightboxImage.alt = title;
-    showLightbox()
+    showPopUp(lightbox);
   })
 }
-
-function showLightbox() {
-  // 5.2 Получает модальное окно как параметр,
-  // Открывает его и навешивает слушатели
-  lightbox.classList.toggle('lightbox_opened');
-  lightbox.addEventListener('click', crossOverlayExit);
-  document.addEventListener('keyup', ESCExit);
-}
-
 
 
 
@@ -255,3 +228,4 @@ initialCards.forEach(function(element) {
   // карточки берем из объекта initialCards
   renderCard(createCard(element), 'append');
 });
+

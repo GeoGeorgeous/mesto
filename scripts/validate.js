@@ -52,14 +52,22 @@ function hasInvalidInput(inputList) {
   })
 }
 
+const disableBtn = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.disabled = true;
+}
+
+const enableBtn = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.disabled = false;
+}
+
 // Функция переключает кнопку сабмита между активная-неактивная в зависимости от валидности формы:
 function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.disabled = true;
+    disableBtn(buttonElement, inactiveButtonClass);
   } else {
-    buttonElement.classList.remove(inactiveButtonClass);
-    buttonElement.disabled = false;
+    enableBtn(buttonElement, inactiveButtonClass);
   }
 }
 
@@ -74,11 +82,12 @@ const enableValidation = ({formSelector, fieldsetSelector, ...rest}) => {
     // вместе со всеми параметрами ...rest
     const fieldsetList = Array.from(formElement.querySelectorAll(fieldsetSelector));
     fieldsetList.forEach((fieldset) => {
-    setEventListeners(fieldset, rest);
+      setEventListeners(fieldset, rest);
     }
   )});
 };
 
 // Вызываем функцию валидацию с параметром — объектом конфига:
 enableValidation(config);
+
 

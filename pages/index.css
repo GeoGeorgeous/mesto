@@ -43,14 +43,12 @@
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__save-button/popup__save-button_inactive.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/_darkness/popup_darkness_lightbox.css);
 @import url(../blocks/popup/__form-error/popup__form-error.css);
 /* lightbox */
 @import url(../blocks/lightbox/lightbox.css);
-@import url(../blocks/lightbox/__wrapper/lightbox__wrapper.css);
 @import url(../blocks/lightbox/__image/lightbox__image.css);
 @import url(../blocks/lightbox/__caption/lightbox__caption.css);
-@import url(../blocks/lightbox/__close-button/lightbox__close-button.css);
-@import url(../blocks/lightbox/_opened/lightbox_opened.css);
 
 
 
