@@ -56,7 +56,7 @@ const accountDescription = document.querySelector('.profile__description'); // Ð
 const lightbox = document.querySelector('.popup[data-type="lightbox"]'); // lightbox
 
 accountInputName.value = accountName
-accountInputDesc.value =  accountDescription
+accountInputDesc.value = accountDescription
 
 
 /*
