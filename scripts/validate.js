@@ -71,18 +71,19 @@ function toggleButtonState(inputList, buttonElement, inactiveButtonClass) {
   }
 }
 
-const enableValidation = ({formSelector, fieldsetSelector, ...rest}) => {
+const enableValidation = ({formSelector, fieldsetSelector, inactiveButtonClass, submitButtonSelector, ...rest}) => {
   // Избавляемся от дефолтного поведения всех форм на странице:
   const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
+      disableBtn(evt.target.querySelector(submitButtonSelector), inactiveButtonClass)
     });
     // В каждой форме находим филдсеты и посылаем их на добавление слушателей дальше,
     // вместе со всеми параметрами ...rest
     const fieldsetList = Array.from(formElement.querySelectorAll(fieldsetSelector));
     fieldsetList.forEach((fieldset) => {
-      setEventListeners(fieldset, rest);
+      setEventListeners(fieldset, config);
     }
   )});
 };

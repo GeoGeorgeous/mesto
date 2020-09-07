@@ -153,7 +153,6 @@ function placeFormSubmitHandler (evt) {
   newCard.link = placeInputLink.value;
   renderCard(createCard(newCard));
   closePopUp(placePopUp); // Закрываем форму
-  disableBtn(evt.target.querySelector('.popup__save-button'), config.inactiveButtonClass);
   placeForm.reset(); // Чистим Форму
 }
 
