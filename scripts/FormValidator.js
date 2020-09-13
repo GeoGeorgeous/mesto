@@ -20,7 +20,7 @@ class FormValidator {
     ↳ —— _setEventListeners: input EventListener на каждый инпут в филдсете / проверяем начальный статус submit;
       ↳ —— _toggleButtonState: переключает submit в зависимости от результата _hasInvalidInput
         ↳ —— _hasInvalidInput: проверяет форму на наличие невалидных инпутов
-        ↳ —— _disableBtn: submit в desabled;
+        ↳ —— _disableBtn: submit в disabled;
         ↳ —— _enableBtn: submit в enabled;
       ↳ —— _checkInputValidity: проверяет валидность инпута;
         ↳ —— _showInputError: показываем ошибку;

@@ -27,7 +27,7 @@
     height: 30px;
     width: 30px;
     background-size: 41px;
-    top: calc(50% - 175px);
-    left: calc(50% + 116px);
+    top: -30px;
+    right: -30px;
   }
 }
