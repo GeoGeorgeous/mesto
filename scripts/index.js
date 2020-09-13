@@ -151,7 +151,8 @@ function placeFormSubmitHandler (evt) {
   const newCard = {}; // Новая карточка Место
   newCard.name = placeInputTitle.value;
   newCard.link = placeInputLink.value;
-  renderCard(createCard(newCard));
+  const card = new Card(newCard, '#card')
+  renderCard(card.generateCard());
   closePopUp(placePopUp); // Закрываем форму
   placeForm.reset(); // Чистим Форму
 }
@@ -163,58 +164,77 @@ placeAddButton.addEventListener('click', () => {
 placeSaveButton.addEventListener('submit', placeFormSubmitHandler); // 4.3
 
 
-
-
-
 /*
-----------  5. Функциональность LightBox ----------
+----------  5. Функциональность Карточек ----------
 */
 
-// 5.1 Функция принимает 3 параметра: название места, ссылку на изображение с местом и элемент картинки
-// и навешивает EventListener -> открытие лайтбокса при клике на картинку
-// -> вставляет нужное изображение, название и аттрибуты в лайтбокс.
-function addLightbox(title, link, cardImage) {
-  cardImage.addEventListener('click', (evt) => {
-    const lightboxCaption = lightbox.querySelector('.lightbox__caption');
-    const lightboxImage = lightbox.querySelector('.lightbox__image');
-    lightboxCaption.textContent = title;
-    lightboxImage.src = link;
-    lightboxImage.alt = title;
-    showPopUp(lightbox);
-  })
-}
+class Card {
+  constructor(data, templateSelector) {
+    this._cardTitle = data.name;
+    this._cardImage = data.link
+    this._templateSelector = templateSelector;
+  }
 
+  _cloneTemplate() {
+    // Клонирует template ивозвращает пустой клон:
+    this._cardElement = document
+    .querySelector(this._templateSelector)
+    .content
+    .cloneNode(true);
+    return this._cardElement;
+  }
 
+  _setEventListeners() {
+    // Получаем разметку кнопок лайка и корзины
+    this._likeButton = this._cardElement.querySelector('.card__like-button');
+    this._deleteButton = this._cardElement.querySelector('.card__delete-button');
 
+    // Добаляем слушатель на кнопку лайка:
+    this._likeButton.addEventListener('click', function (event) {
+      event.target.classList.toggle('card__like-button_active');
+    })
 
-/*
-----------  6. Функциональность Карточек ----------
-*/
+    // Добавляем слушатель на кнопку корзины:
+    this._deleteButton.addEventListener('click', function (event) {
+      event.target.parentElement.remove();
+    })
+  }
 
-function createCard(newCard) {
-  // 6.1 Функция создает новую карточку из Template
-  const cardTemplate = document.querySelector('#card').content;
-  const card = cardTemplate.cloneNode(true);
-  let cardTitle = card.querySelector('.card__title');
-  const cardImage = card.querySelector('.card__image');
-  const cardLikeBtn = card.querySelector('.card__like-button');
-  cardTitle.textContent = newCard.name;
-  cardImage.src = newCard.link;
-  cardImage.alt = newCard.name;
-  cardLikeBtn.addEventListener('click', function (event) {
-    event.target.classList.toggle('card__like-button_active');
-  })
-  card.querySelector('.card__delete-button').addEventListener('click', function (event) {
-    event.target.parentElement.remove();
-  })
-  // Добавляем функциональность лайтбокса этой карточке
-  addLightbox(newCard.name, newCard.link, cardImage);
-  return card;
+  _addLightBox(){
+    this._cardImageElement.addEventListener('click', (evt) => {
+      const lightboxCaption = lightbox.querySelector('.lightbox__caption');
+      const lightboxImage = lightbox.querySelector('.lightbox__image');
+
+      lightboxCaption.textContent = this._cardTitle;
+      lightboxImage.src = this._cardImage;
+      lightboxImage.alt = this._cardTitle;
+      showPopUp(lightbox);
+    });
+  }
+
+  generateCard() {
+    this._cloneTemplate(); // получаем разметку пустой карточки из template
+
+    // Находим разметку изображения и заголовка:
+    this._cardImageElement = this._cardElement.querySelector('.card__image');
+    this._cardTitleElement = this._cardElement.querySelector('.card__title');
+    // Подставляем название и изображение и alt в пустую карточку:
+    this._cardImageElement.src = this._cardImage;
+    this._cardTitleElement.textContent = this._cardTitle;
+    this._cardImageElement.alt = this._cardTitle;
+    // Навешиваем слушателей событий:
+    this._setEventListeners();
+    // Добавляем Lightbox:
+    this._addLightBox();
+    // Вовзаращем готовую карточку
+    return(this._cardElement);
+  }
+
 }
 
 function renderCard(card, method = 'prepend') {
-  // 6.2 Добавляем карточки в DOM
-  const cardsContainer = document.querySelector('.cards__items'); // get container for all cards (ul)
+  // Добавляем карточки в DOM
+  const cardsContainer = document.querySelector('.cards__items'); // Получаем контейнер ul для всех карточек
   if (method === 'prepend') {
     cardsContainer.prepend(card);
   } else {
@@ -222,9 +242,10 @@ function renderCard(card, method = 'prepend') {
   }
 }
 
-initialCards.forEach(function(element) {
-  // 6.3 Создадим и добавим в DOM "карточки из коробки"
+initialCards.forEach((element) => {
+  // Создадим и добавим в DOM "карточки из коробки"
   // карточки берем из объекта initialCards
-  renderCard(createCard(element), 'append');
+  const card = new Card(element, '#card');
+  renderCard(card.generateCard());
 });
 
