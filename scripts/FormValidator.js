@@ -9,22 +9,23 @@ const config = {
   errorClass: 'popup__form-item_error'
 }
 
-class FormValidator {
-    /*
-    —— enableValidation:
-    избавляемся от дефолт. поведения формы;
-    кнопка в disbaled после отправки формы.
 
-    ↳ —— _getFieldSets: находим все филдсеты формы;
-      ↳ —— _setEventListeners: input EventListener на каждый инпут в филдсете / проверяем начальный статус submit;
-        ↳ —— _toggleButtonState: переключает submit в зависимости от результата _hasInvalidInput
-          ↳ —— _hasInvalidInput: проверяет форму на наличие невалидных инпутов
-          ↳ —— _disableBtn: submit в desabled;
-          ↳ —— _enableBtn: submit в enabled;
-        ↳ —— _checkInputValidity: проверяет валидность инпута;
-          ↳ —— _showInputError: показываем ошибку;
-          ↳ —— _hideInputError: скрываем ошибку.
-    */
+class FormValidator {
+  /*
+  —— enableValidation:
+  избавляемся от дефолт. поведения формы;
+  кнопка в disbaled после отправки формы.
+
+  ↳ —— _getFieldSets: находим все филдсеты формы;
+    ↳ —— _setEventListeners: input EventListener на каждый инпут в филдсете / проверяем начальный статус submit;
+      ↳ —— _toggleButtonState: переключает submit в зависимости от результата _hasInvalidInput
+        ↳ —— _hasInvalidInput: проверяет форму на наличие невалидных инпутов
+        ↳ —— _disableBtn: submit в desabled;
+        ↳ —— _enableBtn: submit в enabled;
+      ↳ —— _checkInputValidity: проверяет валидность инпута;
+        ↳ —— _showInputError: показываем ошибку;
+        ↳ —— _hideInputError: скрываем ошибку.
+  */
 
   constructor(config, form) {
     this._formSelector = config.formSelector;
@@ -117,9 +118,5 @@ class FormValidator {
   }
 }
 
-// Получаем список всех форм в документе и включаем валидацию для всех них:
-const formList = Array.from(document.querySelectorAll('.popup__container'));
-formList.forEach((form) => {
-  const formValidator = new FormValidator(config, form);
-  formValidator.enableValidation();
-  });
+
+export {config, FormValidator}
