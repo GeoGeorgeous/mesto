@@ -55,6 +55,7 @@ const accountDescription = document.querySelector('.profile__description'); // Ð
 // 1.7 LightBox
 const lightbox = document.querySelector('.popup[data-type="lightbox"]'); // lightbox
 
+
 accountInputName.value = accountName
 accountInputDesc.value = accountDescription
 
@@ -200,3 +201,4 @@ formList.forEach((form) => {
   formValidator.enableValidation();
   });
 
+  export {lightbox, showPopUp};

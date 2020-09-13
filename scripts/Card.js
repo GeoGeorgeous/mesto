@@ -1,3 +1,5 @@
+import {lightbox, showPopUp} from './index.js';
+
 export default class Card {
   constructor(data, templateSelector) {
     this._cardTitle = data.name;
