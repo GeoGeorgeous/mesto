@@ -176,7 +176,7 @@ class Card {
   }
 
   _cloneTemplate() {
-    // Клонирует template ивозвращает пустой клон:
+    // Клонирует template и возвращает пустой клон:
     this._cardElement = document
     .querySelector(this._templateSelector)
     .content

@@ -41,9 +41,9 @@
   </footer>
 
   <div class="popup" data-type="place">
-    <form class="popup__container" name="place" novalidate>
+    <form class="popup__container" name="place" id="place" novalidate>
       <h3 class="popup__title">Новое место</h3>
-        <fieldset class="popup__form">
+        <fieldset class="popup__form" form="place">
           <div class="popup__form-item-group">
             <input id="title" class="popup__form-item popup__form-item_input_name" type="text" placeholder="Название" name="title" minlength="1" maxlength="30" required>
             <span id="title-error" class="popup__form-error"></span>
@@ -59,9 +59,9 @@
   </div>
 
   <div class="popup" data-type="account">
-    <form class="popup__container" name="account" novalidate>
+    <form class="popup__container" name="account" id="account" novalidate>
       <h3 class="popup__title">Редактировать профиль</h3>
-        <fieldset class="popup__form">
+        <fieldset class="popup__form" form="account">
           <div class="popup__form-item-group">
             <input id="username" class="popup__form-item popup__form-item_input_name" type="text" placeholder="Имя" name="username" minlength="2" maxlength="40" required>
             <span id="username-error" class="popup__form-error"></span>
