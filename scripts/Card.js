@@ -17,7 +17,6 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._cardElement;
     // Получаем разметку кнопок лайка и корзины
     this._likeButton = this._cardElement.querySelector('.card__like-button');
     this._deleteButton = this._cardElement.querySelector('.card__delete-button');
@@ -31,20 +30,23 @@ export default class Card {
     this._deleteButton.addEventListener('click', () => {
       this.removeCard();
     })
+
+    // Добавляем слушатель lightbox:
+    this._cardImageElement.addEventListener('click', () => {
+      this._addLightBox();
+    })
   }
 
   _addLightBox(){
-    this._cardImageElement.addEventListener('click', (evt) => {
-      const lightbox = document.querySelector('.popup[data-type="lightbox"]'); // lightbox
-      const lightboxCaption = lightbox.querySelector('.lightbox__caption');
-      const lightboxImage = lightbox.querySelector('.lightbox__image');
+    const lightbox = document.querySelector('.popup[data-type="lightbox"]');
+    const lightboxCaption = lightbox.querySelector('.lightbox__caption');
+    const lightboxImage = lightbox.querySelector('.lightbox__image');
 
-      lightboxCaption.textContent = this._cardTitle;
-      lightboxImage.src = this._cardImage;
-      lightboxImage.alt = this._cardTitle;
+    lightboxCaption.textContent = this._cardTitle;
+    lightboxImage.src = this._cardImage;
+    lightboxImage.alt = this._cardTitle;
 
-      showPopUp(lightbox);
-    });
+    showPopUp(lightbox);
   }
 
   generateCard() {
@@ -59,8 +61,6 @@ export default class Card {
     this._cardImageElement.alt = this._cardTitle;
     // Навешиваем слушателей событий:
     this._setEventListeners();
-    // Добавляем Lightbox:
-    this._addLightBox();
     // Возваращем готовую карточку
     return(this._cardElement);
   }
