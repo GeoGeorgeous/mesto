@@ -100,6 +100,10 @@ class FormValidator {
     return Array.from(this._form.querySelectorAll(this._fieldsetSelector));
   }
 
+  // removeErrors() {
+
+  // }
+
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();

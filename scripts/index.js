@@ -1,11 +1,15 @@
 /*
----------- Импорт ----------
+---------- Импорты ----------
 */
 
 import {initialCards, showPopUp, accountInputName, accountName, accountInputDesc, accountDescription,
   accountEditButton, accountSaveButton, placeAddButton, placeSaveButton, placePopUp, accountPopUp, 
   placeInputTitle, placeInputLink, closePopUp, placeForm}
 from './utils.js'
+
+import Card from './Card.js'
+
+import {config, FormValidator} from './FormValidator.js'
 
 /*
 ---------- Значение импутов равны дефоту при загрузке страницы ----------
@@ -29,8 +33,11 @@ function accountFormSubmitHandler (evt) {
 }
 
 accountEditButton.addEventListener('click', () => {
+  accountInputName.value = accountName.textContent;
+  accountInputDesc.value = accountDescription.textContent;
   showPopUp(accountPopUp);
 }); 
+
 accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
 
 
@@ -63,8 +70,6 @@ placeSaveButton.addEventListener('submit', placeFormSubmitHandler); // 4.3
 ----------  Функциональность Карточек ----------
 */
 
-import Card from './Card.js'
-
 function renderCard(card, method = 'prepend') {
   // Добавляем карточки в DOM
   const cardsContainer = document.querySelector('.cards__items'); // Получаем контейнер ul для всех карточек
@@ -86,12 +91,9 @@ initialCards.forEach((element) => {
 ---------- Валидатция Форм ----------
 */
 
-import {config, FormValidator} from './FormValidator.js'
-
 // Получаем список всех форм в документе и включаем валидацию для всех них:
 const formList = Array.from(document.querySelectorAll('.popup__container'));
 formList.forEach((form) => {
   const formValidator = new FormValidator(config, form);
   formValidator.enableValidation();
 });
-
