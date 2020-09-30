@@ -4,19 +4,12 @@
 
 import {initialCards, showPopUp, accountInputName, accountName, accountInputDesc, accountDescription,
   accountEditButton, accountSaveButton, placeAddButton, placeSaveButton, placePopUp, accountPopUp, 
-  placeInputTitle, placeInputLink, closePopUp, placeForm}
+  placeInputTitle, placeInputLink, closePopUp, accountForm, placeForm}
 from './utils.js'
 
 import Card from './Card.js'
 
 import {config, FormValidator} from './FormValidator.js'
-
-/*
----------- Значение импутов равны дефоту при загрузке страницы ----------
-*/
-
-accountInputName.value = accountName
-accountInputDesc.value = accountDescription
 
 
 /*
@@ -60,10 +53,12 @@ function placeFormSubmitHandler (evt) {
 }
 
 placeAddButton.addEventListener('click', () => {
+  placeForm.reset(); // Чистим Форму
+  placeFormValidator.removeErrors();
   showPopUp(placePopUp);
 }); 
 
-placeSaveButton.addEventListener('submit', placeFormSubmitHandler); // 4.3
+placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
 
 
 /*
@@ -88,12 +83,11 @@ initialCards.forEach((element) => {
 });
 
 /*
----------- Валидатция Форм ----------
+---------- Валидация Форм ----------
 */
 
-// Получаем список всех форм в документе и включаем валидацию для всех них:
-const formList = Array.from(document.querySelectorAll('.popup__container'));
-formList.forEach((form) => {
-  const formValidator = new FormValidator(config, form);
-  formValidator.enableValidation();
-});
+const accountFormValidator = new FormValidator(config, accountForm); 
+accountFormValidator.enableValidation(); // ВКЛ валидацию для Account
+
+const placeFormValidator = new FormValidator(config, placeForm); 
+placeFormValidator.enableValidation(); // ВКЛ валидацию для Place

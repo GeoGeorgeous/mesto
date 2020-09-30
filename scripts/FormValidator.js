@@ -100,9 +100,16 @@ class FormValidator {
     return Array.from(this._form.querySelectorAll(this._fieldsetSelector));
   }
 
-  // removeErrors() {
-
-  // }
+  removeErrors() {
+    // Метод убирает сообщения об ошибках:
+   const fieldset = this._getFieldSets();
+   fieldset.forEach(fieldset => {
+    const inputList = Array.from((fieldset.querySelectorAll('.popup__form-item')));
+    inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    })
+   })
+  }
 
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {
