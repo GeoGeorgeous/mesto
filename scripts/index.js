@@ -201,4 +201,4 @@ formList.forEach((form) => {
   formValidator.enableValidation();
   });
 
-  export {lightbox, showPopUp};
+export {showPopUp};
