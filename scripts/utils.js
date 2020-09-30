@@ -1,5 +1,6 @@
-
+/*
 // Объект с дефолтными карточками:
+*/
 export const initialCards = [
   {
       name: 'Покровка',
@@ -26,6 +27,19 @@ export const initialCards = [
       link: './images/card__Dobryninskaya.jpg'
   }
 ];
+
+/*
+// Конфигурация для валидтора:
+*/
+export const config = {
+  formSelector: '.popup__container',
+  fieldsetSelector: '.popup__form',
+  inputSelector: '.popup__form-item',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_inactive',
+  // inputErrorClass: 'popup__form-item_error',
+  errorClass: 'popup__form-item_error'
+}
 
 // Аккаунт — Модальное окно
 export const accountPopUp = document.querySelector('.popup[data-type="account"]'); // [Аккаунт] Модальное окно
