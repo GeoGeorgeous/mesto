@@ -1,4 +1,7 @@
-import {showPopUp} from './utils.js';
+import {
+  showPopUp,
+  lightbox}
+from './utils.js';
 
 export default class Card {
   constructor(data, templateSelector) {
@@ -38,7 +41,6 @@ export default class Card {
   }
 
   _addLightBox(){
-    const lightbox = document.querySelector('.popup[data-type="lightbox"]');
     const lightboxCaption = lightbox.querySelector('.lightbox__caption');
     const lightboxImage = lightbox.querySelector('.lightbox__image');
 

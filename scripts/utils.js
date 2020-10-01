@@ -63,6 +63,8 @@ export const placeInputLink = placeForm.elements.link; // Инпут - ссыл�
 export const accountName = document.querySelector('.profile__name'); // Имя профиля
 export const accountDescription = document.querySelector('.profile__description'); // Описание Профиля
 
+// Lightbox
+export const lightbox = document.querySelector('.popup[data-type="lightbox"]');
 
 /*
 ---------- Функциональность модальных окон ----------
