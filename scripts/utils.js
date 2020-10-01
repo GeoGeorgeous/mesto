@@ -66,6 +66,9 @@ export const accountDescription = document.querySelector('.profile__description'
 // Lightbox
 export const lightbox = document.querySelector('.popup[data-type="lightbox"]');
 
+// Получаем контейнер ul для всех карточек
+export const cardsContainer = document.querySelector('.cards__items');
+
 /*
 ---------- Функциональность модальных окон ----------
 */

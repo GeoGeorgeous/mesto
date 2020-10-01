@@ -2,14 +2,33 @@
 ---------- Импорты ----------
 */
 
-import {initialCards, showPopUp, accountInputName, accountName, accountInputDesc, accountDescription,
-  accountEditButton, accountSaveButton, placeAddButton, placeSaveButton, placePopUp, accountPopUp, 
-  placeInputTitle, placeInputLink, closePopUp, accountForm, placeForm}
+import {
+  initialCards,
+  showPopUp,
+  accountInputName,
+  accountName,
+  accountInputDesc,
+  accountDescription,
+  accountEditButton,
+  accountSaveButton,
+  placeAddButton,
+  placeSaveButton,
+  placePopUp,
+  accountPopUp,
+  placeInputTitle,
+  placeInputLink,
+  closePopUp,
+  accountForm,
+  placeForm,
+  cardsContainer}
 from './utils.js'
 
 import Card from './Card.js'
 
-import {config, FormValidator} from './FormValidator.js'
+import {
+  config,
+  FormValidator}
+from './FormValidator.js'
 
 
 /*
@@ -29,7 +48,7 @@ accountEditButton.addEventListener('click', () => {
   accountInputName.value = accountName.textContent;
   accountInputDesc.value = accountDescription.textContent;
   showPopUp(accountPopUp);
-}); 
+});
 
 accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
 
@@ -56,7 +75,7 @@ placeAddButton.addEventListener('click', () => {
   placeForm.reset(); // Чистим Форму
   placeFormValidator.removeErrors();
   showPopUp(placePopUp);
-}); 
+});
 
 placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
 
@@ -67,7 +86,6 @@ placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
 
 function renderCard(card, method = 'prepend') {
   // Добавляем карточки в DOM
-  const cardsContainer = document.querySelector('.cards__items'); // Получаем контейнер ul для всех карточек
   if (method === 'prepend') {
     cardsContainer.prepend(card);
   } else {
@@ -86,8 +104,8 @@ initialCards.forEach((element) => {
 ---------- Валидация Форм ----------
 */
 
-const accountFormValidator = new FormValidator(config, accountForm); 
+const accountFormValidator = new FormValidator(config, accountForm);
 accountFormValidator.enableValidation(); // ВКЛ валидацию для Account
 
-const placeFormValidator = new FormValidator(config, placeForm); 
+const placeFormValidator = new FormValidator(config, placeForm);
 placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
