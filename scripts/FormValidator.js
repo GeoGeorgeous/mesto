@@ -1,4 +1,6 @@
-import {config} from './utils.js'
+import {
+  config}
+from './utils.js'
 
 
 class FormValidator {
@@ -16,6 +18,9 @@ class FormValidator {
       ↳ —— _checkInputValidity: проверяет валидность инпута;
         ↳ —— _showInputError: показываем ошибку;
         ↳ —— _hideInputError: скрываем ошибку.
+
+  —— removeErrors:
+  Метод убирает сообщения об ошибках из формы.
   */
 
   constructor(config, form) {

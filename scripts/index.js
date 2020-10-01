@@ -1,7 +1,4 @@
-/*
----------- Импорты ----------
-*/
-
+// Импорты
 import {
   initialCards,
   showPopUp,
@@ -23,7 +20,9 @@ import {
   cardsContainer}
 from './utils.js'
 
-import Card from './Card.js'
+import
+  Card
+from './Card.js'
 
 import {
   config,
@@ -51,8 +50,6 @@ accountEditButton.addEventListener('click', () => {
 });
 
 accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
-
-
 
 /*
 ----------  Модальное окно [Место] ----------
