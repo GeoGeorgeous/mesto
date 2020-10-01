@@ -15,6 +15,7 @@ export default class Card {
     this._cardElement = document
     .querySelector(this._templateSelector)
     .content
+    .querySelector('.card')
     .cloneNode(true);
     return this._cardElement;
   }
@@ -73,7 +74,8 @@ export default class Card {
   }
 
   removeCard() {
-    this._deleteButton.parentElement.remove();
+    // Удаляет карточку
+    this._cardElement.remove();
     this._cardElement = null;
   }
 
