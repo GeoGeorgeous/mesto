@@ -29,6 +29,7 @@ import {
   FormValidator}
 from './FormValidator.js'
 
+import Section from './Section.js'
 
 /*
 ---------- Модальное окно [Аккаунт] ----------
@@ -63,7 +64,8 @@ function placeFormSubmitHandler (evt) {
   newCard.name = placeInputTitle.value;
   newCard.link = placeInputLink.value;
   const card = new Card(newCard, '#card')
-  renderCard(card.generateCard());
+  const cardElement = card.generateCard()
+  cardSection.addItem(cardElement);
   closePopUp(placePopUp); // Закрываем форму
   placeForm.reset(); // Чистим Форму
 }
@@ -77,25 +79,21 @@ placeAddButton.addEventListener('click', () => {
 placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
 
 
-/*
-----------  Функциональность Карточек ----------
-*/
 
-function renderCard(card, method = 'prepend') {
-  // Добавляем карточки в DOM
-  if (method === 'prepend') {
-    cardsContainer.prepend(card);
-  } else {
-    cardsContainer.append(card);
-  }
-}
+// ----------  Section.js  ----------
 
-initialCards.forEach((element) => {
-  // Создадим и добавим в DOM "карточки из коробки"
-  // карточки берем из объекта initialCards
-  const card = new Card(element, '#card');
-  renderCard(card.generateCard());
-});
+const cardSection = new Section({
+  // Создаем класс Section
+  // и рендерим дефолт. карточки
+  items: initialCards,
+  renderer: () => {
+    initialCards.forEach((element) => {
+    const card = new Card(element, '#card');
+    const cardElement = card.generateCard()
+    cardsContainer.append(cardElement);
+    });
+  }},
+cardsContainer)
 
 /*
 ---------- Валидация Форм ----------
