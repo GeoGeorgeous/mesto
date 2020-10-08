@@ -1,3 +1,4 @@
+import PopupWithImage from './PopupWithImage.js';
 import {
   showPopUp,
   lightbox}
@@ -38,6 +39,8 @@ export default class Card {
     // Добавляем слушатель lightbox:
     this._cardImageElement.addEventListener('click', () => {
       this._addLightBox();
+      // const popupWithImage = new PopupWithImage(document.querySelector('.popup[data-type="lightbox"]'));
+      // popupWithImage.open();
     })
   }
 
