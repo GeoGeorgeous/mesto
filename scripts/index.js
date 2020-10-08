@@ -1,7 +1,7 @@
 // Импорты
 import {
   initialCards,
-  showPopUp,
+  // showPopUp,
   accountInputName,
   accountName,
   accountInputDesc,
@@ -14,7 +14,7 @@ import {
   accountPopUp,
   placeInputTitle,
   placeInputLink,
-  closePopUp,
+  // closePopUp,
   accountForm,
   placeForm,
   cardsContainer}
@@ -30,6 +30,7 @@ import {
 from './FormValidator.js'
 
 import Section from './Section.js'
+import Popup from './Popup.js'
 
 /*
 ---------- Модальное окно [Аккаунт] ----------
@@ -73,7 +74,8 @@ function placeFormSubmitHandler (evt) {
 placeAddButton.addEventListener('click', () => {
   placeForm.reset(); // Чистим Форму
   placeFormValidator.removeErrors();
-  showPopUp(placePopUp);
+  const placePopuppp = new Popup(placePopUp);
+  placePopuppp.open();
 });
 
 placeSaveButton.addEventListener('submit', placeFormSubmitHandler);

@@ -5,8 +5,8 @@ export default class Section {
 
     —— render: применяет полученную функцию-параметр render для всех items
     —— addItem(item): добавляет item в начало this.containerSelector
+  */
 
-    */
   constructor({items, renderer}, containerSelector){
     this._items = items;
     this._renderer = renderer();
