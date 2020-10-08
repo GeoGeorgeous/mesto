@@ -1,9 +1,4 @@
-import {
-  config}
-from './utils.js'
-
-
-class FormValidator {
+export default class FormValidator {
   /*
   —— enableValidation:
   избавляемся от дефолт. поведения формы;
@@ -125,5 +120,3 @@ class FormValidator {
   }
 }
 
-
-export {config, FormValidator}

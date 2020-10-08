@@ -1,88 +1,85 @@
-// Импорты
+/* ---------- Импорты ---------- */
+
 import {
   initialCards,
-  // showPopUp,
+  initialUser,
+  config,
+  userInfo,
   accountInputName,
-  accountName,
   accountInputDesc,
-  accountDescription,
   accountEditButton,
-  accountSaveButton,
   placeAddButton,
-  placeSaveButton,
   placePopUp,
   accountPopUp,
   placeInputTitle,
   placeInputLink,
-  // closePopUp,
   accountForm,
   placeForm,
   cardsContainer}
 from './utils.js'
-
-import
-  Card
-from './Card.js'
-
-import {
-  config,
-  FormValidator}
-from './FormValidator.js'
-
+import FormValidator from './FormValidator.js'
+import Card from './Card.js'
 import Section from './Section.js'
-import Popup from './Popup.js'
+import PopupWithForm from './PopupWithForm.js'
+import UserInfo from './UserInfo.js'
 
-/*
----------- Модальное окно [Аккаунт] ----------
-*/
-
-// Обработчик сабмита формы Аккаунт
-function accountFormSubmitHandler (evt) {
-  evt.preventDefault(); // Избавляемся от стандартного поведения
-  // Добавляем на сайт новые значения имени и описания
-  accountName.textContent = accountInputName.value;
-  accountDescription.textContent = accountInputDesc.value;
-  closePopUp(accountPopUp); // Закрываем форму
-}
+/* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
 
 accountEditButton.addEventListener('click', () => {
-  accountInputName.value = accountName.textContent;
-  accountInputDesc.value = accountDescription.textContent;
-  showPopUp(accountPopUp);
+  // при нажатии на кнопку редактирования профиля:
+  // создается новый экземпляр PopupWithForm
+  // с параметрами accountPopUp, сабмит-коллбэком и экземпляром Валидатора
+  const currentPopUp = new PopupWithForm(
+    accountPopUp,
+    (evt) => {
+      evt.preventDefault(); // Избавляемся от стандартного поведения
+      // Добавляем на сайт новые значения имени и описания
+      currentUserInfo.setUserInfo( {
+        name: accountInputName.value,
+        desc: accountInputDesc.value}
+      )
+      currentPopUp.close() // Закрываем форму
+    },
+    accountFormValidator
+  );
+  // создаем новый экземлпяр UserInfo чтобы получить объект с именем и описанием пользователя
+  const currentUserInfo = new UserInfo({userInfo})
+  accountInputName.value = currentUserInfo.getUserInfo().userName; // вставляем инпуты
+  accountInputDesc.value = currentUserInfo.getUserInfo().userDescription; // вставляем инпуты
+  currentPopUp.open(); // открываем сам попап
 });
 
-accountSaveButton.addEventListener('submit', accountFormSubmitHandler);
 
-/*
-----------  Модальное окно [Место] ----------
-*/
-
-
-// Обработчик сабмита формы Место
-function placeFormSubmitHandler (evt) {
-  evt.preventDefault(); // Избавляемся от стандартного поведения
-  const newCard = {}; // Новая карточка Место
-  newCard.name = placeInputTitle.value;
-  newCard.link = placeInputLink.value;
-  const card = new Card(newCard, '#card')
-  const cardElement = card.generateCard()
-  cardSection.addItem(cardElement);
-  closePopUp(placePopUp); // Закрываем форму
-  placeForm.reset(); // Чистим Форму
-}
+/* ---------- Модальное окно: Место (PopupWithForm.js + UserInfo.js) ---------- */
 
 placeAddButton.addEventListener('click', () => {
-  placeForm.reset(); // Чистим Форму
-  placeFormValidator.removeErrors();
-  const placePopuppp = new Popup(placePopUp);
-  placePopuppp.open();
+  // при нажатии на кнопку добавления места:
+  // создается новый экземпляр PopupWithForm
+  // с параметрами placePopUp, сабмит-коллбэком и экземпляром Валидатора
+  const currentPopUp = new PopupWithForm(
+    placePopUp,
+    (evt) => {
+      evt.preventDefault(); // Избавляемся от стандартного поведения
+      const newCard = {}; // Новая карточка Место
+      newCard.name = placeInputTitle.value;
+      newCard.link = placeInputLink.value;
+      const card = new Card(newCard, '#card')
+      const cardElement = card.generateCard()
+      cardSection.addItem(cardElement);
+      currentPopUp.close() // Закрываем форму
+    },
+    placeFormValidator
+  );
+  currentPopUp.open(); // открываем сам попап
 });
 
-placeSaveButton.addEventListener('submit', placeFormSubmitHandler);
+// ---------- Дефолтный аккаунт (UserInfo.js) ----------
+
+const loadedUser = new UserInfo({userInfo});
+loadedUser.setUserInfo(initialUser);
 
 
-
-// ----------  Section.js  ----------
+// ---------- Дефолтные карточки (Section.js) ----------
 
 const cardSection = new Section({
   // Создаем класс Section
@@ -97,9 +94,8 @@ const cardSection = new Section({
   }},
 cardsContainer)
 
-/*
----------- Валидация Форм ----------
-*/
+
+/* ---------- Валидация Форм (FormValidator.js) ---------- */
 
 const accountFormValidator = new FormValidator(config, accountForm);
 accountFormValidator.enableValidation(); // ВКЛ валидацию для Account

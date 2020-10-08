@@ -1,6 +1,12 @@
 import Popup from './Popup.js'
 
 export default class PopupWithImage extends Popup {
+    /*
+  —— PopupWithImage:
+  отвечает за управление отображением попапа с картинкой
+
+  —— open: вставляет в попап картинку, заголовок и подпись к картинке
+  */
   constructor(popup) {
     super(popup)
     this.popup = popup;

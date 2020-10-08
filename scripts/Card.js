@@ -1,14 +1,20 @@
 import PopupWithImage from './PopupWithImage.js';
 import {
-  showPopUp,
+  // showPopUp,
   lightbox}
 from './utils.js';
 
 export default class Card {
-  constructor(data, templateSelector) {
+
+  // handleCardClick =
+  // const popupWithImage = new PopupWithImage(document.querySelector('.popup[data-type="lightbox"]'));
+  // popupWithImage.open();
+
+  constructor(data, templateSelector, handleCardClick) {
     this._cardTitle = data.name;
     this._cardImage = data.link
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _cloneTemplate() {
@@ -37,12 +43,7 @@ export default class Card {
     })
 
     // Добавляем слушатель lightbox:
-    this._cardImageElement.addEventListener('click', () => {
-      this._addLightBox();
-      // const popupWithImage = new PopupWithImage(document.querySelector('.popup[data-type="lightbox"]'));
-      // popupWithImage.open();
-    })
-  }
+    this._cardImageElement.addEventListener('click', this._handleCardClick)}
 
   _addLightBox(){
     const lightboxCaption = lightbox.querySelector('.lightbox__caption');

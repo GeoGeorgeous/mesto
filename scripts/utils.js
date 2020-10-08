@@ -1,6 +1,4 @@
-/*
-// Объект с дефолтными карточками:
-*/
+/* ---------- Дефолтные карточоки ---------- */
 export const initialCards = [
   {
       name: 'Покровка',
@@ -28,23 +26,26 @@ export const initialCards = [
   }
 ];
 
-/*
-// Конфигурация для валидтора:
-*/
+/* ---------- Дефолтный юзер ---------- */
+export const initialUser = {
+  name: 'Васко да Гама',
+  desc: 'Мореплаватель эпохи Великих географических открытий'
+}
+
+/* ---------- Конфигурация для FormValidator.js и PopupForm.js ---------- */
 export const config = {
   formSelector: '.popup__container',
   fieldsetSelector: '.popup__form',
   inputSelector: '.popup__form-item',
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
-  // inputErrorClass: 'popup__form-item_error',
   errorClass: 'popup__form-item_error'
 }
 
 // Аккаунт — Модальное окно
 export const accountPopUp = document.querySelector('.popup[data-type="account"]'); // [Аккаунт] Модальное окно
 export const accountEditButton = document.querySelector('.profile__edit-button'); // [Аккаунт] Кнопка редактирования профиля
-export const accountSaveButton = accountPopUp.querySelector('.popup__container'); // [Аккаунт] Кнопка субмита
+const accountSaveButton = accountPopUp.querySelector('.popup__container'); // [Аккаунт] Кнопка субмита
 // Аккаунт — Форма
 export const accountForm = document.forms.account;
 export const accountInputName = accountForm.elements.username;
@@ -60,60 +61,13 @@ export const placeInputTitle = placeForm.elements.title; // Инпут - наз�
 export const placeInputLink = placeForm.elements.link; // Инпут - ссылка на изображение
 
 // Имя и Описание профиля
-export const accountName = document.querySelector('.profile__name'); // Имя профиля
-export const accountDescription = document.querySelector('.profile__description'); // Описание Профиля
+export const userInfo = {
+  userName: document.querySelector('.profile__name'), // Имя профиля
+  userDescription: document.querySelector('.profile__description') // Описание Профиля
+}
 
 // Lightbox
 export const lightbox = document.querySelector('.popup[data-type="lightbox"]');
 
 // Получаем контейнер ul для всех карточек
 export const cardsContainer = document.querySelector('.cards__items');
-
-/*
----------- Функциональность модальных окон ----------
-*/
-/*
-// Открытие и закрытие модальных окон:
-*/
-
-export const showPopUp = (popup) => {
-  // Получает модальное окно как параметр, навешивает слушатели и открывает его
-  popup.classList.add('popup_opened');
-  popup.addEventListener('click', crossOverlayExit);
-  document.addEventListener('keyup', ESCExit);
-}
-
-
-export const closePopUp = (popup) => {
-  // Закрывает модальное окно и снимает все слушатели
-  popup.classList.remove('popup_opened');
-  popup.removeEventListener('click', crossOverlayExit);
-  document.removeEventListener('keyup', ESCExit);
-}
-
-
-/*
-// Коллбэки для слушателей:
-
-crossOverlayExit и ESCExit — оба работают с попапами и лайтбоксами, определяя, содержит ли
-event.target класс открытого попапа или лайтбокса и в зависимости от этого определяют,
-что закрывать.
-*/
-
-function crossOverlayExit(evt) {
-  // Коллбэк, если нажали на оверлей или на крестик: находит открытый попап и подбираем ему нужный модификатор закрытия
-  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close-button')){
-    const currentPopUp = document.querySelector('.popup_opened');
-    closePopUp(currentPopUp);
-  }
-};
-
-function ESCExit(evt) {
-  // Коллбэк, если нажали ESC: находит открытый попап и закрывает его
-  if ( (evt.key === 'Escape') ) {
-    const currentPopUp = document.querySelector('.popup_opened');
-    closePopUp(currentPopUp);
-  }
-}
-
-
