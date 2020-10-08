@@ -10,11 +10,11 @@ export default class Popup {
     —— setEventListeners: метод добавляет слушатель клика иконке закрытия попапа
     —— removeEventListeners: метод удаляет слушатели
   */
- 
+
   constructor(popup) {
     this.popup = popup;
-    this._openedSelector = 'popup_opened'; // селектор открытого попапа
 
+    this._openedSelector = 'popup_opened'; // селектор открытого попапа
     // обертки для коллбэков eventListener:
     this._handleEscCloseWrapper = this._handleEscClose.bind(this);
     this.__handleMainCloseWrapper = this._handleMainClose.bind(this);

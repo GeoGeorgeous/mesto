@@ -14,7 +14,6 @@ export default class PopupWithImage extends Popup {
     lightboxImage.src = this._cardImage;
     lightboxImage.alt = this._cardTitle;
 
-    this.popup.classList.add(this._openedSelector);
-    this.setEventListeners();
+    super.open();
   }
 }
