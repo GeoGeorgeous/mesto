@@ -40,6 +40,7 @@ export default class PopupWithForm extends Popup {
   }
 
   close() {
+    this._submitButton.removeEventListener('submit', this._submitCallback); // без этого будет дублировать submit
     super.close();
     this._form.reset();
     this._validator.removeErrors();
