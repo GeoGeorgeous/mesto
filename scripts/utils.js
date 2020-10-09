@@ -28,8 +28,8 @@ export const initialCards = [
 
 /* ---------- Дефолтный юзер ---------- */
 export const initialUser = {
-  username: 'Васко да Гама',
-  description: 'Мореплаватель эпохи Великих географических открытий'
+  username: 'Жак-Ив Кусто',
+  description: 'Исследователь океана'
 }
 
 /* ---------- Конфигурация для FormValidator.js и PopupWithForm.js ---------- */
