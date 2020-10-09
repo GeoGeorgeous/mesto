@@ -1,28 +1,35 @@
 /* ---------- Дефолтные карточоки ---------- */
+import pokrovkaImage from '../images/card__Pokrovka.jpg';
+import TSUMImage from '../images/card__TeatralnyjProezd.jpg';
+import MoscowCityImage from '../images/card__MoscowCity.jpg';
+import MyasnitskayaImage from '../images/card__Myasnickaya.jpg'
+import ChertanovoImage from '../images/card__Chertanovo.jpg';
+import DobryninskayaImage from '../images/card__Dobryninskaya.jpg';
+
 export const initialCards = [
   {
       title: 'Покровка',
-      link: './images/card__Pokrovka.jpg'
+      link: pokrovkaImage
   },
   {
       title: 'ЦУМ',
-      link: './images/card__TeatralnyjProezd.jpg'
+      link: TSUMImage
   },
   {
       title: 'Москва-сити',
-      link: './images/card__MoscowCity.jpg'
+      link: MoscowCityImage
   },
   {
       title: 'Мясницкая',
-      link: './images/card__Myasnickaya.jpg'
+      link: MyasnitskayaImage
   },
   {
       title: 'Чертаново',
-      link: './images/card__Chertanovo.jpg'
+      link: ChertanovoImage
   },
   {
       title: 'метро Добрынинская',
-      link: './images/card__Dobryninskaya.jpg'
+      link: DobryninskayaImage
   }
 ];
 
