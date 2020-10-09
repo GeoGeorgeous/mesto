@@ -1,27 +1,27 @@
 /* ---------- Дефолтные карточоки ---------- */
 export const initialCards = [
   {
-      name: 'Покровка',
+      title: 'Покровка',
       link: './images/card__Pokrovka.jpg'
   },
   {
-      name: 'ЦУМ',
+      title: 'ЦУМ',
       link: './images/card__TeatralnyjProezd.jpg'
   },
   {
-      name: 'Москва-сити',
+      title: 'Москва-сити',
       link: './images/card__MoscowCity.jpg'
   },
   {
-      name: 'Мясницкая',
+      title: 'Мясницкая',
       link: './images/card__Myasnickaya.jpg'
   },
   {
-      name: 'Чертаново',
+      title: 'Чертаново',
       link: './images/card__Chertanovo.jpg'
   },
   {
-      name: 'метро Добрынинская',
+      title: 'метро Добрынинская',
       link: './images/card__Dobryninskaya.jpg'
   }
 ];

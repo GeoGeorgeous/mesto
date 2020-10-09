@@ -71,8 +71,8 @@ placeAddButton.addEventListener('click', () => {
           // в данном случае: открой lightbox при клике на карточку
         });
       const cardElement = card.generateCard() // создаем карточку
-      cardSection.addItem(cardElement); // добавляем карточку
       currentPopUp.close() // закрываем форму
+      cardSection.addItem(cardElement); // добавляем карточку в cardSection, созданный при инициализации
     },
     placeFormValidator // III параметр — Валидатор
   );

@@ -21,8 +21,9 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    // Возвращает объект, где key = input name,
-    // а значение = value
+    // Возвращает объект.
+    // ключ = input name,
+    // значение = value.
     const inputValues =
     Object
     .values(this._form)

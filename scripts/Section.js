@@ -1,7 +1,7 @@
 export default class Section {
   /*
     —— Section:
-    отвечает за отрисовку элементов на странице.
+    отвечает за отрисовку элементов на странице
 
     —— render: применяет полученную функцию-параметр render для всех items
     —— addItem(item): добавляет item в начало this.containerSelector

@@ -17,7 +17,7 @@ export default class Popup {
     this._openedSelector = 'popup_opened'; // селектор открытого попапа
     // обертки для коллбэков eventListener:
     this._handleEscCloseWrapper = this._handleEscClose.bind(this);
-    this.__handleMainCloseWrapper = this._handleMainClose.bind(this);
+    this._handleMainCloseWrapper = this._handleMainClose.bind(this);
   }
 
   _handleEscClose(evt) {
@@ -41,17 +41,17 @@ export default class Popup {
 
   close() {
     this.popup.classList.remove(this._openedSelector);
-    this.removeEventListeners();
+    this._removeEventListeners();
   }
 
   setEventListeners() {
-    this.popup.addEventListener('click', this.__handleMainCloseWrapper);
+    this.popup.addEventListener('click', this._handleMainCloseWrapper);
     document.addEventListener('keyup', this._handleEscCloseWrapper);
   }
 
-  removeEventListeners() {
+  _removeEventListeners() {
     document.removeEventListener('keyup', this._handleEscCloseWrapper);
-    this.popup.removeEventListener('click', this.__handleMainCloseWrapper);
+    this.popup.removeEventListener('click', this._handleMainCloseWrapper);
   }
 
 }
