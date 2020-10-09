@@ -1,5 +1,5 @@
 import Popup from './Popup.js'
-import {config} from './utils.js'
+import {config} from '../utils/utils.js'
 
 export default class PopupWithForm extends Popup {
   /*
