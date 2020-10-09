@@ -1,17 +1,12 @@
 import PopupWithImage from './PopupWithImage.js';
-import {
-  // showPopUp,
-  lightbox}
-from './utils.js';
+import {lightbox} from './utils.js';
 
 export default class Card {
 
-  // handleCardClick =
-  // const popupWithImage = new PopupWithImage(document.querySelector('.popup[data-type="lightbox"]'));
-  // popupWithImage.open();
+
 
   constructor(data, templateSelector, handleCardClick) {
-    this._cardTitle = data.name;
+    this._cardTitle = data.title;
     this._cardImage = data.link
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
@@ -45,16 +40,16 @@ export default class Card {
     // Добавляем слушатель lightbox:
     this._cardImageElement.addEventListener('click', this._handleCardClick)}
 
-  _addLightBox(){
-    const lightboxCaption = lightbox.querySelector('.lightbox__caption');
-    const lightboxImage = lightbox.querySelector('.lightbox__image');
+  // _addLightBox(){
+  //   const lightboxCaption = lightbox.querySelector('.lightbox__caption');
+  //   const lightboxImage = lightbox.querySelector('.lightbox__image');
 
-    lightboxCaption.textContent = this._cardTitle;
-    lightboxImage.src = this._cardImage;
-    lightboxImage.alt = this._cardTitle;
+  //   lightboxCaption.textContent = this._cardTitle;
+  //   lightboxImage.src = this._cardImage;
+  //   lightboxImage.alt = this._cardTitle;
 
-    showPopUp(lightbox);
-  }
+  //   showPopUp(lightbox);
+  // }
 
   generateCard() {
     this._cloneTemplate(); // получаем разметку пустой карточки из template

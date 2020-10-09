@@ -1,14 +1,14 @@
 import Popup from './Popup.js'
 import {config} from './utils.js'
 
-export default class PopupWithImage extends Popup {
+export default class PopupWithForm extends Popup {
   /*
-  —— PopupWithImage:
-  отвечает за управление отображением попапа с картинкой
+  —— PopupWithForm:
+  отвечает за управление отображением попапа с формой
 
-  —— _getInputValues: возвращает объект с данными пользователя
-  —— setEventListeners: принимает новые данные пользователя и добавляет их на страницу
-  —— close:
+  —— _getInputValues: собирает данные всех полей формы и возвращает их в виде объекта
+  —— setEventListeners: super + добавляет обработчик сабмита
+  —— close: очищает форму и ошибки
   */
   constructor(popup, submitCallback, validator) {
     super(popup);
@@ -16,12 +16,21 @@ export default class PopupWithImage extends Popup {
     this._submitCallback = submitCallback;
     this._submitButton = this.popup.querySelector('.popup__container');
     this._form = this.popup.querySelector(config.formSelector)
+    this._inputSelector = config.inputSelector;
     this._validator = validator // используется для очистки ошибок при закрытии формы
   }
 
   _getInputValues() {
-    accountInputName.value = accountName.textContent;
-    accountInputDesc.value = accountDescription.textContent;
+    // Возвращает объект, где key = input name,
+    // а значение = value
+    const inputValues =
+    Object
+    .values(this._form)
+    .reduce( (obj, field) => {
+      obj[field.name] = field.value;
+      return obj;
+    }, {})
+    return inputValues;
   }
 
   setEventListeners() {

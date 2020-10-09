@@ -28,11 +28,11 @@ export const initialCards = [
 
 /* ---------- Дефолтный юзер ---------- */
 export const initialUser = {
-  name: 'Васко да Гама',
-  desc: 'Мореплаватель эпохи Великих географических открытий'
+  username: 'Васко да Гама',
+  description: 'Мореплаватель эпохи Великих географических открытий'
 }
 
-/* ---------- Конфигурация для FormValidator.js и PopupForm.js ---------- */
+/* ---------- Конфигурация для FormValidator.js и PopupWithForm.js ---------- */
 export const config = {
   formSelector: '.popup__container',
   fieldsetSelector: '.popup__form',
@@ -45,7 +45,6 @@ export const config = {
 // Аккаунт — Модальное окно
 export const accountPopUp = document.querySelector('.popup[data-type="account"]'); // [Аккаунт] Модальное окно
 export const accountEditButton = document.querySelector('.profile__edit-button'); // [Аккаунт] Кнопка редактирования профиля
-const accountSaveButton = accountPopUp.querySelector('.popup__container'); // [Аккаунт] Кнопка субмита
 // Аккаунт — Форма
 export const accountForm = document.forms.account;
 export const accountInputName = accountForm.elements.username;
@@ -54,16 +53,15 @@ export const accountInputDesc = accountForm.elements.description;
 // Место — Модальное окно
 export const placePopUp = document.querySelector('.popup[data-type="place"]'); // [Место] Модальное окно
 export const placeAddButton = document.querySelector('.profile__add-button'); // [Место] Кнопка добавления нового места
-export const placeSaveButton = placePopUp.querySelector('.popup__container'); // [Место] Кнопка субмита
 // Место — Форма
 export const placeForm = document.forms.place; // Форма Место
 export const placeInputTitle = placeForm.elements.title; // Инпут - название места
 export const placeInputLink = placeForm.elements.link; // Инпут - ссылка на изображение
 
 // Имя и Описание профиля
-export const userInfo = {
-  userName: document.querySelector('.profile__name'), // Имя профиля
-  userDescription: document.querySelector('.profile__description') // Описание Профиля
+export const userSelectors = {
+  username: document.querySelector('.profile__name'), // Имя профиля
+  description: document.querySelector('.profile__description') // Описание Профиля
 }
 
 // Lightbox
