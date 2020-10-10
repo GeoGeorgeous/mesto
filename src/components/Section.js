@@ -7,10 +7,10 @@ export default class Section {
     —— addItem(item): добавляет item в начало this.containerSelector
   */
 
-  constructor({items, renderer}, containerSelector){
+  constructor({items, renderer}, containerElement){
     this._items = items;
-    this._renderer = renderer();
-    this.containerSelector = containerSelector;
+    this._renderer = renderer;
+    this._containerElement = containerElement;
   }
 
   render() {
@@ -19,7 +19,7 @@ export default class Section {
     });
   }
 
-  addItem(item) {
-    this.containerSelector.prepend(item);
+  addItem(element) {
+    this._containerElement.prepend(element);
   }
 }

@@ -47,25 +47,27 @@ accountEditButton.addEventListener('click', () => {
 });
 
 
+/* ---------- Модальное окно: LightBox (PopupWithImage.js) ---------- */
+
+const popupLightBox = new PopupWithImage(lightbox);
+popupLightBox.setEventListeners();
+
+
 /* ---------- Модальное окно: Место (PopupWithForm.js + Card.js + PopupWithImage.js) ---------- */
 
 const popupCardForm = new PopupWithForm(
   placePopUp, // I параметр — форма
-  (evt) => { // II параметр - коллбэк субмита
-    evt.preventDefault(); // избавляемся от стандартного поведения
-    const inputValues = popupCardForm._getInputValues() // получаем данные инпутов (название и ссылка)
-    const newCard = {}; // новая карточка Место
-    newCard.title = inputValues.title;
-    newCard.link = inputValues.link;
+  (data) => { // II параметр - коллбэк субмита
+    const newCard = {title, link}; // новая карточка Место
+    newCard.title = data.title;
+    newCard.link = data.link;
     const card = new Card(
       // создаем новый экземпляр Card
       newCard, // I параметр — объект с данными карточки
       '#card', // II параметр — селектор карточки
       () => { // III параметр — handleCardClick
-        const lightBoxView = new PopupWithImage(lightbox);
-        lightBoxView.open(newCard);
-        // в данном случае: открой lightbox при клике на карточку
-      });
+        popupLightBox.open(newCard);
+      })
     const cardElement = card.generateCard() // создаем карточку
     popupCardForm.close() // закрываем форму
     cardSection.addItem(cardElement); // добавляем карточку в cardSection, созданный при инициализации
@@ -93,20 +95,19 @@ const cardSection = new Section({
   // Создаем класс Section
   // и рендерим дефолт. карточки
   items: initialCards,
-  renderer: () => {
-    initialCards.forEach((element) => {
+  renderer: (data) => {
     const card = new Card(
-      element,
+      data,
       '#card',
       () => {
-        const lightBoxView = new PopupWithImage(lightbox);
-        lightBoxView.open(element);
+        popupLightBox.open(data);
       });
-    const cardElement = card.generateCard()
-    cardsContainer.append(cardElement);
-    });
+    cardsContainer.append(card.generateCard())
   }},
-cardsContainer)
+  cardsContainer
+)
+
+cardSection.render();
 
 
 /* ---------- Валидация Форм (FormValidator.js) ---------- */
