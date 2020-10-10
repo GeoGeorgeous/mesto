@@ -9,16 +9,15 @@ export default class PopupWithImage extends Popup {
   */
   constructor(popup) {
     super(popup)
-    this.popup = popup;
+    this._popup = popup;
+    this._lightboxCaption = this._popup.querySelector('.lightbox__caption');
+    this._lightboxImage = this._popup.querySelector('.lightbox__image');
   }
 
   open(cardData) {
-    const lightboxCaption = this.popup.querySelector('.lightbox__caption');
-    const lightboxImage = this.popup.querySelector('.lightbox__image');
-
-    lightboxCaption.textContent = cardData.title;
-    lightboxImage.src = cardData.link;
-    lightboxImage.alt = cardData.title;
+    this._lightboxCaption.textContent = cardData.title;
+    this._lightboxImage.src = cardData.link;
+    this._lightboxImage.alt = cardData.title;
 
     super.open();
   }

@@ -12,7 +12,7 @@ export default class Popup {
   */
 
   constructor(popup) {
-    this.popup = popup;
+    this._popup = popup;
 
     this._openedSelector = 'popup_opened'; // селектор открытого попапа
     // обертки для коллбэков eventListener:
@@ -35,23 +35,24 @@ export default class Popup {
   }
 
   open() {
-    this.popup.classList.add(this._openedSelector);
-    this.setEventListeners();
-  }
-
-  close() {
-    this.popup.classList.remove(this._openedSelector);
-    this._removeEventListeners();
-  }
-
-  setEventListeners() {
-    this.popup.addEventListener('click', this._handleMainCloseWrapper);
+    // открытие модального окна, и привязка обработчика Esc
+    this._popup.classList.add(this._openedSelector);
     document.addEventListener('keyup', this._handleEscCloseWrapper);
   }
 
-  _removeEventListeners() {
+  close() {
+    // закрытие модального окна, и удаление обработчика Esc
+    this._popup.classList.remove(this._openedSelector);
     document.removeEventListener('keyup', this._handleEscCloseWrapper);
-    this.popup.removeEventListener('click', this._handleMainCloseWrapper);
   }
+
+  setEventListeners() {
+    this._popup.addEventListener('click', this._handleMainCloseWrapper);
+  }
+
+  // _removeEventListeners() {
+  //   document.removeEventListener('keyup', this._handleEscCloseWrapper);
+  //   this._popup.removeEventListener('click', this._handleMainCloseWrapper);
+  // }
 
 }

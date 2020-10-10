@@ -26,58 +26,59 @@ import UserInfo from '../components/UserInfo.js'
 
 /* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
 
+const popupProfileForm = new PopupWithForm(
+  accountPopUp, // I параметр — форма
+  (data) => { // II параметр - коллбэк субмита
+    currentUserInfo.setUserInfo({username: data.username, description: data.description}); // ставим новые данные
+    popupProfileForm.close() // Закрываем форму
+  },
+  () => {
+    accountFormValidator.removeErrors();
+  } // III параметр — коллбэк закрытия
+);
+
+popupProfileForm.setEventListeners();
+
 accountEditButton.addEventListener('click', () => {
-  // при нажатии на кнопку редактирования профиля:
-  // создается новый экземпляр PopupWithForm
-  // с параметрами accountPopUp, сабмит-коллбэком и экземпляром Валидатора
-  const currentPopUp = new PopupWithForm(
-    accountPopUp, // I параметр — форма
-    (evt) => { // II параметр - коллбэк субмита
-      evt.preventDefault(); // избавляемся от стандартного поведения
-      const inputValues = currentPopUp._getInputValues(); // получаем данные инпутов (юзернейм и дескрипшн)
-      currentUserInfo.setUserInfo({username: inputValues.username, description: inputValues.description}); // ставим новые данные
-      currentPopUp.close() // Закрываем форму
-    },
-    accountFormValidator // III параметр — Валидатор
-  );
-  // создаем новый экземлпяр UserInfo чтобы получить объект с именем и описанием пользователя
-  const currentUserInfo = new UserInfo({userSelectors})
-  accountInputName.value = currentUserInfo.getUserInfo().username; // вставляем данные в инпуты
-  accountInputDesc.value = currentUserInfo.getUserInfo().description; // вставляем данные в инпуты
-  currentPopUp.open(); // открываем сам попап
+  const { username, description } = loadedUser.getUserInfo();
+  accountInputName.value = username; // вставляем данные в инпуты
+  accountInputDesc.value = description; // вставляем данные в инпуты
+  popupProfileForm.open(); // открываем сам попап
 });
 
 
 /* ---------- Модальное окно: Место (PopupWithForm.js + Card.js + PopupWithImage.js) ---------- */
 
+const popupCardForm = new PopupWithForm(
+  placePopUp, // I параметр — форма
+  (evt) => { // II параметр - коллбэк субмита
+    evt.preventDefault(); // избавляемся от стандартного поведения
+    const inputValues = popupCardForm._getInputValues() // получаем данные инпутов (название и ссылка)
+    const newCard = {}; // новая карточка Место
+    newCard.title = inputValues.title;
+    newCard.link = inputValues.link;
+    const card = new Card(
+      // создаем новый экземпляр Card
+      newCard, // I параметр — объект с данными карточки
+      '#card', // II параметр — селектор карточки
+      () => { // III параметр — handleCardClick
+        const lightBoxView = new PopupWithImage(lightbox);
+        lightBoxView.open(newCard);
+        // в данном случае: открой lightbox при клике на карточку
+      });
+    const cardElement = card.generateCard() // создаем карточку
+    popupCardForm.close() // закрываем форму
+    cardSection.addItem(cardElement); // добавляем карточку в cardSection, созданный при инициализации
+  },
+  () => {
+    placeFormValidator.removeErrors();
+  } // III параметр — коллбэк закрытия
+);
+
+popupCardForm.setEventListeners();
+
 placeAddButton.addEventListener('click', () => {
-  // при нажатии на кнопку добавления места:
-  // создается новый экземпляр PopupWithForm
-  // с параметрами placePopUp, сабмит-коллбэком и экземпляром Валидатора
-  const currentPopUp = new PopupWithForm(
-    placePopUp, // I параметр — форма
-    (evt) => { // II параметр - коллбэк субмита
-      evt.preventDefault(); // избавляемся от стандартного поведения
-      const inputValues = currentPopUp._getInputValues() // получаем данные инпутов (название и ссылка)
-      const newCard = {}; // новая карточка Место
-      newCard.title = inputValues.title;
-      newCard.link = inputValues.link;
-      const card = new Card(
-        // создаем новый экземпляр Card
-        newCard, // I параметр — объект с данными карточки
-        '#card', // II параметр — селектор карточки
-        () => { // III параметр — handleCardClick
-          const lightBoxView = new PopupWithImage(lightbox);
-          lightBoxView.open(newCard);
-          // в данном случае: открой lightbox при клике на карточку
-        });
-      const cardElement = card.generateCard() // создаем карточку
-      currentPopUp.close() // закрываем форму
-      cardSection.addItem(cardElement); // добавляем карточку в cardSection, созданный при инициализации
-    },
-    placeFormValidator // III параметр — Валидатор
-  );
-  currentPopUp.open(); // открываем сам попап
+  popupCardForm.open(); // открываем сам попап
 });
 
 // ---------- Дефолтный аккаунт (UserInfo.js) ----------
