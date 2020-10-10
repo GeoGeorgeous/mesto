@@ -6,20 +6,20 @@ export default class UserInfo {
   —— getUserInfo: возвращает объект с данными пользователя
   —— setUserInfo: принимает новые данные пользователя и добавляет их на страницу
   */
-  constructor({userSelectors}) {
-    this.userName = userSelectors.username;
-    this.userDescription = userSelectors.description;
+  constructor(userElements) {
+    this._userNameElement = userElements.username;
+    this._userDescriptionElement = userElements.description;
   }
 
   getUserInfo() {
     return {
-      username: this.userName.textContent,
-      description: this.userDescription.textContent
+      username: this._userNameElement.textContent,
+      description: this._userDescriptionElement.textContent
     }
   }
 
   setUserInfo(userInfo) {
-    this.userName.textContent = userInfo.username;
-    this.userDescription.textContent = userInfo.description;
+    this._userNameElement.textContent = userInfo.username;
+    this._userDescriptionElement.textContent = userInfo.description;
   }
 }

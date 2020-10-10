@@ -66,7 +66,7 @@ export const placeInputTitle = placeForm.elements.title; // Инпут - наз�
 export const placeInputLink = placeForm.elements.link; // Инпут - ссылка на изображение
 
 // Имя и Описание профиля
-export const userSelectors = {
+export const userElements = {
   username: document.querySelector('.profile__name'), // Имя профиля
   description: document.querySelector('.profile__description') // Описание Профиля
 }

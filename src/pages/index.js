@@ -5,7 +5,7 @@ import {
   initialCards,
   initialUser,
   config,
-  userSelectors,
+  userElements,
   accountInputName,
   accountInputDesc,
   accountEditButton,
@@ -29,7 +29,7 @@ import UserInfo from '../components/UserInfo.js'
 const popupProfileForm = new PopupWithForm(
   accountPopUp, // I параметр — форма
   (data) => { // II параметр - коллбэк субмита
-    currentUserInfo.setUserInfo({username: data.username, description: data.description}); // ставим новые данные
+    userInfo.setUserInfo({username: data.username, description: data.description}); // ставим новые данные
     popupProfileForm.close() // Закрываем форму
   },
   () => {
@@ -40,7 +40,7 @@ const popupProfileForm = new PopupWithForm(
 popupProfileForm.setEventListeners();
 
 accountEditButton.addEventListener('click', () => {
-  const { username, description } = loadedUser.getUserInfo();
+  const { username, description } = userInfo.getUserInfo();
   accountInputName.value = username; // вставляем данные в инпуты
   accountInputDesc.value = description; // вставляем данные в инпуты
   popupProfileForm.open(); // открываем сам попап
@@ -83,8 +83,8 @@ placeAddButton.addEventListener('click', () => {
 
 // ---------- Дефолтный аккаунт (UserInfo.js) ----------
 
-const loadedUser = new UserInfo({userSelectors});
-loadedUser.setUserInfo(initialUser);
+const userInfo = new UserInfo(userElements);
+userInfo.setUserInfo(initialUser);
 
 
 // ---------- Дефолтные карточки (Section.js) ----------
