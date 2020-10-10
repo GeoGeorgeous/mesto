@@ -7,13 +7,12 @@ export default class Card {
   }
 
   _cloneTemplate() {
-    // Клонирует template и возвращает пустой клон:
+    // Клонирует template и записывает пустой клон в this._cardElement:
     this._cardElement = document
     .querySelector(this._templateSelector)
     .content
     .querySelector('.card')
     .cloneNode(true);
-    return this._cardElement;
   }
 
   _setEventListeners() {
@@ -23,12 +22,12 @@ export default class Card {
 
     // Добаляем слушатель на кнопку лайка:
     this._likeButton.addEventListener('click', () => {
-      this.likeCard();
+      this._likeCard();
     })
 
     // Добавляем слушатель на кнопку корзины:
     this._deleteButton.addEventListener('click', () => {
-      this.removeCard();
+      this._removeCard();
     })
 
     // Добавляем слушатель lightbox:
@@ -48,15 +47,15 @@ export default class Card {
     // Навешиваем слушателей событий:
     this._setEventListeners();
     // Возваращем готовую карточку
-    return(this._cardElement);
+    return this._cardElement;
   }
 
-  likeCard() {
+  _likeCard() {
     // Ставит лайк
     this._likeButton.classList.toggle('card__like-button_active');
   }
 
-  removeCard() {
+  _removeCard() {
     // Удаляет карточку
     this._cardElement.remove();
     this._cardElement = null;
