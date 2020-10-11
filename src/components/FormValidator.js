@@ -19,16 +19,14 @@ export default class FormValidator {
   */
 
   constructor(config, form) {
-    this._formSelector = config.formSelector;
     this._fieldsetSelector = config.fieldsetSelector;
-    this._inputSelector = config.inputSelector;
     this._submitButtonSelector = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
-    this._inputErrorClass = config.inputErrorClass; // Не используется, но оставим на случай ошибок на ревью :)
     this._errorClass = config.errorClass;
 
     this._form = form; // Валидируемая форма
     this._submitBtn = this._form.querySelector(this._submitButtonSelector) // Кнопка Submit
+    this._inputList = Array.from(this._form.querySelectorAll(config.inputSelector)); // Массив всех инпутов формы
   }
 
   _checkInputValidity(inputElement) {
@@ -76,39 +74,23 @@ export default class FormValidator {
   }
 
   _setEventListeners() {
-    // Записываем массив всех филдсетов в fieldSetList:
-    const fieldSetList = this._getFieldSets();
-    // Для каждого филдсета..
-    fieldSetList.forEach((fieldset) => {
-      //.. создаем список инпутов:
-      const inputList = Array.from((fieldset.querySelectorAll('.popup__form-item')));
-      this._toggleButtonState(inputList); // Определим начальный статус кнопки submit
-      inputList.forEach((inputElement) => {
-        // Для кажого инпута..
-        inputElement.addEventListener('input', () => {
-          // ..слушатель на валидность
-          this._checkInputValidity(inputElement);
-          // ..слушатель на переключение submit:
-          this._toggleButtonState(inputList)
-        });
+    this._toggleButtonState(this._inputList); // Определим начальный статус кнопки submit
+    this._inputList.forEach((inputElement) => {
+      // Для кажого инпута..
+      inputElement.addEventListener('input', () => {
+        // ..слушатель на валидность
+        this._checkInputValidity(inputElement);
+        // ..слушатель на переключение submit:
+        this._toggleButtonState(this._inputList)
       });
     });
   }
 
-  _getFieldSets() {
-    // Возвращает массив всех филдсетов формы:
-    return Array.from(this._form.querySelectorAll(this._fieldsetSelector));
-  }
-
   removeErrors() {
     // Метод убирает сообщения об ошибках:
-   const fieldset = this._getFieldSets();
-   fieldset.forEach(fieldset => {
-    const inputList = Array.from((fieldset.querySelectorAll('.popup__form-item')));
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
-    })
-   })
+    });
   }
 
   enableValidation() {
