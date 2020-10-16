@@ -1,7 +1,8 @@
 export default class Card {
   constructor(data, templateSelector, handleCardClick, handleDeleteClick) {
     this._cardTitle = data.name;
-    this._cardImage = data.link
+    this._cardImage = data.link;
+    this._cardLikes = data.likes.length;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -42,13 +43,15 @@ export default class Card {
     // Находим разметку изображения и заголовка:
     this._cardImageElement = this._cardElement.querySelector('.card__image');
     this._cardTitleElement = this._cardElement.querySelector('.card__title');
+    this._cardLikesElement = this._cardElement.querySelector('.card__likes');
     // Подставляем название и изображение и alt в пустую карточку:
     this._cardImageElement.src = this._cardImage;
     this._cardTitleElement.textContent = this._cardTitle;
     this._cardImageElement.alt = this._cardTitle;
+    this._cardLikesElement.textContent = this._cardLikes;
     // Навешиваем слушателей событий:
     this._setEventListeners();
-    // Возваращем готовую карточку
+    // Возвращаем готовую карточку
     return this._cardElement;
   }
 

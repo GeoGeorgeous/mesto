@@ -145,7 +145,6 @@ api.getCards()
     }},
     cardsContainer
   )
-
   cardSection.render();
 
 })
@@ -208,3 +207,9 @@ placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
 //   .then((result) => {
 //     console.log(result);
 //   });
+
+const newCard = {
+  name: 'Покровка',
+  link: 'https://s.hi-news.ru/wp-content/uploads/2019/07/apoolomissions-750x422.jpg'
+}
+// api.uploadCard(newCard)
