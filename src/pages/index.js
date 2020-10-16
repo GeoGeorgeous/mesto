@@ -117,3 +117,24 @@ accountFormValidator.enableValidation(); // ВКЛ валидацию для Acc
 
 const placeFormValidator = new FormValidator(config, placeForm);
 placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
+
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-16/cards', {
+  headers: {
+    authorization: '25068d5b-79ef-423f-8b22-b9922c31ad6c'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  });
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-16/users/me', {
+  headers: {
+    authorization: '25068d5b-79ef-423f-8b22-b9922c31ad6c'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    console.log(result);
+  });
