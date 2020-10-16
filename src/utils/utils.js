@@ -65,10 +65,13 @@ export const placeForm = document.forms.place; // Форма Место
 export const placeInputTitle = placeForm.elements.title; // Инпут - название места
 export const placeInputLink = placeForm.elements.link; // Инпут - ссылка на изображение
 
+// Подтверждение удаления — Модальное окно
+export const confirmPopUp = document.querySelector('.popup[data-type="confirm-delete"]');
+
 // Имя и Описание профиля
 export const userElements = {
-  username: document.querySelector('.profile__name'), // Имя профиля
-  description: document.querySelector('.profile__description') // Описание Профиля
+  name: document.querySelector('.profile__name'), // Имя профиля
+  about: document.querySelector('.profile__description') // Описание Профиля
 }
 
 // Lightbox

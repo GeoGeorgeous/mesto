@@ -7,8 +7,8 @@ export default class UserInfo {
   —— setUserInfo: принимает новые данные пользователя и добавляет их на страницу
   */
   constructor(userElements) {
-    this._userNameElement = userElements.username;
-    this._userDescriptionElement = userElements.description;
+    this._userNameElement = userElements.name;
+    this._userDescriptionElement = userElements.about;
   }
 
   getUserInfo() {
@@ -19,7 +19,7 @@ export default class UserInfo {
   }
 
   setUserInfo(userInfo) {
-    this._userNameElement.textContent = userInfo.username;
-    this._userDescriptionElement.textContent = userInfo.description;
+    this._userNameElement.textContent = userInfo.name;
+    this._userDescriptionElement.textContent = userInfo.about;
   }
 }

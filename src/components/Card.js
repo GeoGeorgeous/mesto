@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
-    this._cardTitle = data.title;
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick) {
+    this._cardTitle = data.name;
     this._cardImage = data.link
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick;
   }
 
   _cloneTemplate() {
@@ -27,11 +28,12 @@ export default class Card {
 
     // Добавляем слушатель на кнопку корзины:
     this._deleteButton.addEventListener('click', () => {
+      // this._handleDeleteClick();
       this._removeCard();
-    })
+    });
 
     // Добавляем слушатель lightbox:
-    this._cardImageElement.addEventListener('click', this._handleCardClick)
+    this._cardImageElement.addEventListener('click', this._handleCardClick);
   }
 
   generateCard() {
