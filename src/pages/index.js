@@ -82,7 +82,8 @@ const popupChangeAvatar = new PopupWithForm (
   avatarPopUp,
   (data) => {
     api.setAvatar(data.link)
-    .then(userElements.avatar.src = data.link)
+    .then(res => res.json())
+    .then( (res) => {userElements.avatar.src = res.avatar})
     .then(popupChangeAvatar.close())
     .catch( (err) => console.log(err) )
   },
@@ -97,12 +98,18 @@ changeAvatarBtn.addEventListener('click', () => {
   }
 )
 
-/* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
+/* ---------- Редактирование профиля ---------- */
+
+const userInfo = new UserInfo(userElements);
 
 const popupProfileForm = new PopupWithForm(
   accountPopUp, // I параметр — форма
   (data) => { // II параметр - коллбэк субмита
-    userInfo.setUserInfo({username: data.username, description: data.description}); // ставим новые данные
+    api.setUser(data)
+    .then(res => res.json())
+    .then(res => {
+      userInfo.setUserInfo({name: res.name, about: res.about, avatar: res.avatar}); // ставим новые данные
+    })
     popupProfileForm.close() // Закрываем форму
   },
   () => {
@@ -113,9 +120,9 @@ const popupProfileForm = new PopupWithForm(
 popupProfileForm.setEventListeners();
 
 accountEditButton.addEventListener('click', () => {
-  const { username, description } = userInfo.getUserInfo();
-  accountInputName.value = username; // вставляем данные в инпуты
-  accountInputDesc.value = description; // вставляем данные в инпуты
+  const { name, about } = userInfo.getUserInfo();
+  accountInputName.value = name; // вставляем данные в инпуты
+  accountInputDesc.value = about; // вставляем данные в инпуты
   popupProfileForm.open(); // открываем сам попап
 });
 
@@ -171,11 +178,8 @@ placeAddButton.addEventListener('click', () => {
 api.getUser()
 .then(res => res.json())
 .then(data => {
-  const userInfo = new UserInfo(userElements);
   userInfo.setUserInfo(data);
-  console.log(data);
 })
-
 // const userInfo = new UserInfo(userElements);
 // userInfo.setUserInfo(initialUser);
 
@@ -203,35 +207,6 @@ api.getCards()
     section.addItem(cardElement); // добавляем карточку в section
   })
 })
-
-
-
-
-// api.getCards()
-// .then(res => { return res.json() })
-// .then(data => {
-//   const userCardsArr = data;
-//   const cardSection = new Section({
-//     // Создаем класс Section
-//     // и рендерим дефолт. карточки
-//     items: userCardsArr,
-//     renderer: (data) => {
-//       const card = new Card(
-//         data,
-//         '#card',
-//         () => {
-//           popupLightBox.open(data);
-//         },
-//         () => {
-//           popupDeleteConfirm.open();
-//         });
-//       cardsContainer.append(card.generateCard())
-//     }},
-//     cardsContainer
-//   )
-//   cardSection.render(data);
-
-// })
 
 
 /* ---------- Валидация Форм (FormValidator.js) ---------- */
