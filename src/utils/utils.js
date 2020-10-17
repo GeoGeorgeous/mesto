@@ -67,11 +67,18 @@ export const placeInputLink = placeForm.elements.link; // Инпут - ссыл�
 
 // Подтверждение удаления — Модальное окно
 export const confirmPopUp = document.querySelector('.popup[data-type="confirm-delete"]');
+export const avatarForm = document.forms.avatar;
+
+// Редактирование аватара — Модальное окно
+export const avatarPopUp = document.querySelector('.popup[data-type="avatar"]');
+export const changeAvatarBtn = document.querySelector('.profile__avatar');
+export const avatarElement = document.querySelector('.profile__avatar-image');
 
 // Имя и Описание профиля
 export const userElements = {
   name: document.querySelector('.profile__name'), // Имя профиля
-  about: document.querySelector('.profile__description') // Описание Профиля
+  about: document.querySelector('.profile__description'), // Описание Профиля
+  avatar: document.querySelector('.profile__avatar-image')
 }
 
 // Lightbox

@@ -14,6 +14,10 @@ import {
   accountPopUp,
   accountForm,
   confirmPopUp,
+  avatarPopUp,
+  avatarForm,
+  avatarElement,
+  changeAvatarBtn,
   placeForm,
   cardsContainer,
   lightbox}
@@ -60,10 +64,38 @@ const api = new Api({
 
 /* ---------- Модальное окно: ConfirmDelete () ---------- */
 
-const popupDeleteConfirm = new PopupWithSubmit(confirmPopUp, (data) => {
-console.log(data);
-});
+const popupDeleteConfirm = new PopupWithSubmit(
+  confirmPopUp,
+  {submitCallback: (data) => {
+    console.log(data);
+    confirmPopUp.close();
+    },
+  closeCallback: (data) => {
+    console.log(data);
+  }
+})
 popupDeleteConfirm.setEventListeners();
+
+/* ---------- Смена аватара ---------- */
+
+const popupChangeAvatar = new PopupWithForm (
+  avatarPopUp,
+  (data) => {
+    api.setAvatar(data.link)
+    .then(userElements.avatar.src = data.link)
+    .then(popupChangeAvatar.close())
+    .catch( (err) => console.log(err) )
+  },
+  () => {
+    avatarFormValidator.removeErrors();}
+)
+
+popupChangeAvatar.setEventListeners();
+
+changeAvatarBtn.addEventListener('click', () => {
+    popupChangeAvatar.open();
+  }
+)
 
 /* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
 
@@ -209,3 +241,6 @@ accountFormValidator.enableValidation(); // ВКЛ валидацию для Acc
 
 const placeFormValidator = new FormValidator(config, placeForm);
 placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
+
+const avatarFormValidator = new FormValidator(config, avatarForm);
+avatarFormValidator.enableValidation(); // ВКЛ валидацию для Avatar
