@@ -6,38 +6,38 @@ import MyasnitskayaImage from '../images/card__Myasnickaya.jpg'
 import ChertanovoImage from '../images/card__Chertanovo.jpg';
 import DobryninskayaImage from '../images/card__Dobryninskaya.jpg';
 
-export const initialCards = [
-  {
-      title: 'Покровка',
-      link: pokrovkaImage
-  },
-  {
-      title: 'ЦУМ',
-      link: TSUMImage
-  },
-  {
-      title: 'Москва-сити',
-      link: MoscowCityImage
-  },
-  {
-      title: 'Мясницкая',
-      link: MyasnitskayaImage
-  },
-  {
-      title: 'Чертаново',
-      link: ChertanovoImage
-  },
-  {
-      title: 'метро Добрынинская',
-      link: DobryninskayaImage
-  }
-];
+// export const initialCards = [
+//   {
+//       title: 'Покровка',
+//       link: pokrovkaImage
+//   },
+//   {
+//       title: 'ЦУМ',
+//       link: TSUMImage
+//   },
+//   {
+//       title: 'Москва-сити',
+//       link: MoscowCityImage
+//   },
+//   {
+//       title: 'Мясницкая',
+//       link: MyasnitskayaImage
+//   },
+//   {
+//       title: 'Чертаново',
+//       link: ChertanovoImage
+//   },
+//   {
+//       title: 'метро Добрынинская',
+//       link: DobryninskayaImage
+//   }
+// ];
 
-/* ---------- Дефолтный юзер ---------- */
-export const initialUser = {
-  username: 'Жак-Ив Кусто',
-  description: 'Исследователь океана'
-}
+// /* ---------- Дефолтный юзер ---------- */
+// export const initialUser = {
+//   username: 'Жак-Ив Кусто',
+//   description: 'Исследователь океана'
+// }
 
 /* ---------- Конфигурация для FormValidator.js и PopupWithForm.js ---------- */
 export const config = {
@@ -72,7 +72,7 @@ export const avatarForm = document.forms.avatar;
 // Редактирование аватара — Модальное окно
 export const avatarPopUp = document.querySelector('.popup[data-type="avatar"]');
 export const changeAvatarBtn = document.querySelector('.profile__avatar');
-export const avatarElement = document.querySelector('.profile__avatar-image');
+// export const avatarElement = document.querySelector('.profile__avatar-image');
 
 // Имя и Описание профиля
 export const userElements = {

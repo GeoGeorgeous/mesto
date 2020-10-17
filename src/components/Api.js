@@ -14,14 +14,24 @@ export default class Api {
     this._authorization = '25068d5b-79ef-423f-8b22-b9922c31ad6c';
   }
 
+  _fetchButCatch(url, init) {
+    return fetch(url, init)
+    .then((response) => {
+      if (response.ok) {
+        return response.json()
+      }
+      return Promise.reject(`Ошибка ${response.status}: ${response.statusText}`)
+    })
+  }
+
   getUser() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._fetchButCatch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
   }
 
   setUser(userData) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._fetchButCatch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -32,7 +42,7 @@ export default class Api {
   }
 
   setAvatar(imgSrc) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return this._fetchButCatch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -42,7 +52,7 @@ export default class Api {
   }
 
   uploadCard(card) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._fetchButCatch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -53,27 +63,27 @@ export default class Api {
   }
 
   getCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._fetchButCatch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
   }
 
   deleteCard(card) {
-    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+    return this._fetchButCatch(`${this._baseUrl}/cards/${card._id}`, {
       method: 'DELETE',
       headers: this._headers
     });
   }
 
   setLike(card) {
-    return fetch(`${this._baseUrl}/cards/likes/${card._id}`, {
+    return this._fetchButCatch(`${this._baseUrl}/cards/likes/${card._id}`, {
       method: 'PUT',
       headers: this._headers
     });
   }
 
   removeLike(card) {
-    return fetch(`${this._baseUrl}/cards/likes/${card._id}`, {
+    return this._fetchButCatch(`${this._baseUrl}/cards/likes/${card._id}`, {
       method: 'DELETE',
       headers: this._headers
     });

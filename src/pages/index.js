@@ -2,8 +2,6 @@
 import '../pages/index.css';
 
 import {
-  initialCards,
-  initialUser,
   config,
   userElements,
   accountInputName,
@@ -16,7 +14,6 @@ import {
   confirmPopUp,
   avatarPopUp,
   avatarForm,
-  avatarElement,
   changeAvatarBtn,
   placeForm,
   cardsContainer,
@@ -68,7 +65,6 @@ function createCardInstance(card) {
         cardInstance._youLiked()
         // Если да, то лайк надо убрать:
         ? api.removeLike(card)
-        .then(res => res.json())
         .then(res => {
           cardInstance._cardLikes = res.likes;
           cardInstance.renderAmountOfLikes(res.likes.length)
@@ -76,7 +72,6 @@ function createCardInstance(card) {
         .then(cardInstance.toggleLikeBtnState())
         // Если нет, то лайк надо поставить:
         : api.setLike(card)
-        .then(res => res.json())
         .then(res => {
           cardInstance._cardLikes = res.likes;
           cardInstance.renderAmountOfLikes(res.likes.length)
@@ -101,7 +96,7 @@ const popupDeleteConfirm = new PopupWithSubmit(
   confirmPopUp,
   // коллбэк сабмита (удаления карточки)
   (cardElement, cardObj, evt) => {
-    setBtnText(evt, 'Сохранение...')
+    setBtnText(evt, 'Удаление...')
     api.deleteCard(cardObj)
     .then(cardElement.removeCard())
     .then(() => {
@@ -118,7 +113,6 @@ const popupChangeAvatar = new PopupWithForm (
   (data, evt) => {
     setBtnText(evt, 'Сохранение...')
     api.setAvatar(data.link)
-    .then( res => res.json())
     .then( (res) => {userElements.avatar.src = res.avatar})
     .then( () => {
       popupChangeAvatar.close()
@@ -146,7 +140,6 @@ const popupProfileForm = new PopupWithForm(
   (data, evt) => { // II параметр - коллбэк субмита
     setBtnText(evt, 'Сохранение...')
     api.setUser(data)
-    .then(res => res.json())
     .then(res => {
       userInfo.setUserInfo({name: res.name, about: res.about, avatar: res.avatar}); // ставим новые данные
     })
@@ -181,12 +174,11 @@ popupLightBox.setEventListeners();
 const popupCardForm = new PopupWithForm(
   placePopUp, // I параметр — форма
   (data, evt) => { // II параметр - коллбэк субмита
-    setBtnText(evt, 'Сохранение...');
+    setBtnText(evt, 'Добавление...');
     const newCard = {name, link}; // новая карточка Место
     newCard.name = data.title;
     newCard.link = data.link;
     api.uploadCard(newCard) // Добаляем карточку на сервер
-    .then(res => res.json())
     .then(cardObject => {
       const cardElement =
       createCardInstance(cardObject)
@@ -213,7 +205,6 @@ placeAddButton.addEventListener('click', () => {
 // ---------- Дефолтный аккаунт (UserInfo.js) ----------
 
 api.getUser()
-.then(res => res.json())
 .then(data => {
   userInfo.setUserInfo(data);
 })
@@ -225,7 +216,6 @@ api.getUser()
 
 
 api.getCards()
-.then(res => res.json())
 .then(res => {return res.reverse()}) // Переворачиваем массив карточек
 .then(resReversed => {
   resReversed.forEach( (card) => {
