@@ -21,8 +21,4 @@ export default class PopupWithSubmit extends Popup {
     // });
   }
 
-  // setSubmitAction(action) {
-  //   this._handleSubmit = action;
-  // }
-
 }

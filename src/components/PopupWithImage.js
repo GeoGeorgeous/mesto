@@ -15,9 +15,9 @@ export default class PopupWithImage extends Popup {
   }
 
   open(cardData) {
-    this._lightboxCaption.textContent = cardData.title;
+    this._lightboxCaption.textContent = cardData.name;
     this._lightboxImage.src = cardData.link;
-    this._lightboxImage.alt = cardData.title;
+    this._lightboxImage.alt = cardData.name;
 
     super.open();
   }

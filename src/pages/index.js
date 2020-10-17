@@ -28,6 +28,23 @@ import UserInfo from '../components/UserInfo.js'
 import PopupWithSubmit from '../components/PopupWithSubmit.js'
 
 
+/* ---------- Section (Section.js) ---------- */
+const section = new Section(
+  (cardElement) => {
+    const card = new Card(
+      data,
+      '#card',
+      () => {
+        popupLightBox.open(data);
+      },
+      () => {
+        popupDeleteConfirm.open();
+      })
+    cardsContainer.append(card.generateCard())
+  },
+  cardsContainer
+)
+
 /* ---------- Работа с сервером (Api.js) ---------- */
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-16',
@@ -37,6 +54,12 @@ const api = new Api({
   }
 });
 
+
+
+/* ---------- Модальное окно: ConfirmDelete () ---------- */
+
+const popupDeleteConfirm = new PopupWithSubmit(confirmPopUp);
+popupDeleteConfirm.setEventListeners();
 
 /* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
 
@@ -72,22 +95,27 @@ popupLightBox.setEventListeners();
 const popupCardForm = new PopupWithForm(
   placePopUp, // I параметр — форма
   (data) => { // II параметр - коллбэк субмита
-    const newCard = {title, link}; // новая карточка Место
-    newCard.title = data.title;
+    const newCard = {name, link}; // новая карточка Место
+    newCard.name = data.title;
     newCard.link = data.link;
-    const card = new Card(
-      // создаем новый экземпляр Card
-      newCard, // I параметр — объект с данными карточки
-      '#card', // II параметр — селектор карточки
-      () => { // III параметр — handleCardClick
-        popupLightBox.open(newCard);
-      },
-      () => {
-        this._removeCard(); // IV параметр — коллбэк удаления
-      })
-    const cardElement = card.generateCard() // создаем карточку
-    popupCardForm.close() // закрываем форму
-    cardSection.addItem(cardElement); // добавляем карточку в cardSection, созданный при инициализации
+    api.uploadCard(newCard) // Добаляем карточку на сервер
+    .then(res => res.json())
+    .then(cardObject => {
+      const card = new Card(
+        // создаем новый экземпляр Card
+        cardObject, // I параметр — объект с данными карточки
+        '#card', // II параметр — селектор карточки
+        () => { // III параметр — handleCardClick
+          popupLightBox.open(cardObject);
+        },
+        () => {
+          popupDeleteConfirm.open();
+          this._removeCard(); // IV параметр — коллбэк удаления
+        }, `7f651893ffa284663c078177`)
+        const cardElement = card.generateCard() // создаем карточку
+        popupCardForm.close() // закрываем форму
+        section.addItem(cardElement); // добавляем карточку в cardSection
+        })
   },
   () => {
     placeFormValidator.removeErrors();
@@ -100,10 +128,6 @@ placeAddButton.addEventListener('click', () => {
   popupCardForm.open(); // открываем сам попап
 });
 
-/* ---------- Модальное окно: ConfirmDelete () ---------- */
-
-const popupDeleteConfirm = new PopupWithSubmit(confirmPopUp);
-popupDeleteConfirm.setEventListeners();
 
 // ---------- Дефолтный аккаунт (UserInfo.js) ----------
 
@@ -121,61 +145,56 @@ api.getUser()
 
 // ---------- Дефолтные карточки (Section.js) ----------
 
-// console.log(initialCards);
 api.getCards()
 .then(res => { return res.json() })
 .then(data => {
-  const userCardsArr = data;
-  const cardSection = new Section({
-    // Создаем класс Section
-    // и рендерим дефолт. карточки
-    items: userCardsArr,
-    renderer: (data) => {
-      const card = new Card(
-        data,
-        '#card',
-        () => {
-          popupLightBox.open(data);
-        },
-        () => {
-          popupDeleteConfirm.setSubmitAction(console.log(this));
-          popupDeleteConfirm.open();
-        });
-      cardsContainer.append(card.generateCard())
-    }},
-    cardsContainer
-  )
-  cardSection.render();
-
+  const serverCards = data.reverse();
+  console.log(serverCards);
+  serverCards.forEach(card => {
+    const cardInstance = new Card(
+      // создаем новый экземпляр Card
+      card, // I параметр — объект с данными карточки
+      '#card', // II параметр — селектор карточки
+      () => { // III параметр — handleCardClick
+        popupLightBox.open(card);
+      },
+      () => {
+        popupDeleteConfirm.open();
+        this._removeCard(); // IV параметр — коллбэк удаления
+    },`7f651893ffa284663c078177`)
+    const cardElement = cardInstance.generateCard() // создаем карточку
+    section.addItem(cardElement); // добавляем карточку в section
+  })
 })
 
 
 
 
+// api.getCards()
+// .then(res => { return res.json() })
+// .then(data => {
+//   const userCardsArr = data;
+//   const cardSection = new Section({
+//     // Создаем класс Section
+//     // и рендерим дефолт. карточки
+//     items: userCardsArr,
+//     renderer: (data) => {
+//       const card = new Card(
+//         data,
+//         '#card',
+//         () => {
+//           popupLightBox.open(data);
+//         },
+//         () => {
+//           popupDeleteConfirm.open();
+//         });
+//       cardsContainer.append(card.generateCard())
+//     }},
+//     cardsContainer
+//   )
+//   cardSection.render(data);
 
-
-
-// const cardSection = new Section({
-//   // Создаем класс Section
-//   // и рендерим дефолт. карточки
-//   items: initialCards,
-//   renderer: (data) => {
-//     const card = new Card(
-//       data,
-//       '#card',
-//       () => {
-//         popupLightBox.open(data);
-//       },
-//       () => {
-//         popupDeleteConfirm.setSubmitAction(console.log(this));
-//         popupDeleteConfirm.open();
-//       });
-//     cardsContainer.append(card.generateCard())
-//   }},
-//   cardsContainer
-// )
-
-// cardSection.render();
+// })
 
 
 /* ---------- Валидация Форм (FormValidator.js) ---------- */
@@ -187,29 +206,3 @@ const placeFormValidator = new FormValidator(config, placeForm);
 placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
 
 
-
-// fetch('https://mesto.nomoreparties.co/v1/cohort-16/cards', {
-//   headers: {
-//     authorization: '25068d5b-79ef-423f-8b22-b9922c31ad6c'
-//   }
-// })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });
-
-// fetch('https://mesto.nomoreparties.co/v1/cohort-16/users/me', {
-//   headers: {
-//     authorization: '25068d5b-79ef-423f-8b22-b9922c31ad6c'
-//   }
-// })
-//   .then(res => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });
-
-const newCard = {
-  name: 'Покровка',
-  link: 'https://s.hi-news.ru/wp-content/uploads/2019/07/apoolomissions-750x422.jpg'
-}
-// api.uploadCard(newCard)
