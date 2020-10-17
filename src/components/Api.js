@@ -1,13 +1,13 @@
 export default class Api {
-// getCards: получить список всех карточек с сервера в виде массива (GET)
-// getUser: получить данные пользователя на сервере  (GET)
-// setUser: заменить данные пользователя на сервере (PATCH)
-// uploadCard: добавить карточку на сервер (POST)
+// getCards(): получить список всех карточек с сервера в виде массива (GET)
+// getUser(): получить данные пользователя на сервере  (GET)
+// setUser(): заменить данные пользователя на сервере (PATCH)
+// uploadCard(): добавить карточку на сервер (POST)
+// deleteCard(): удалить карточку (DELETE)
+// setAvatar(): заменить аватар (PATCH)
+// setLike(): залайкать карточку (PUT)
+// removeLike(): удалить лайк карточки (DELETE)
 
-// удалить карточку (DELETE)
-// заменить аватар (PATCH)
-// "залайкать" карточку (PUT)
-// удалить лайк карточки (DELETE)
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -31,6 +31,16 @@ export default class Api {
     });
   }
 
+  setAvatar(imgSrc) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: imgSrc
+      })
+    });
+  }
+
   uploadCard(card) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
@@ -46,6 +56,27 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
+  }
+
+  deleteCard(card) {
+    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    });
+  }
+
+  setLike() {
+    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+      method: 'PUT',
+      headers: this._headers
+    });
+  }
+
+  removeLike() {
+    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    });
   }
 
 }

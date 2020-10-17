@@ -29,21 +29,23 @@ import PopupWithSubmit from '../components/PopupWithSubmit.js'
 
 
 /* ---------- Section (Section.js) ---------- */
-const section = new Section(
-  (cardElement) => {
-    const card = new Card(
-      data,
-      '#card',
-      () => {
-        popupLightBox.open(data);
-      },
-      () => {
-        popupDeleteConfirm.open();
-      })
-    cardsContainer.append(card.generateCard())
-  },
-  cardsContainer
-)
+// const section = new Section(
+//   (cardElement) => {
+//     const card = new Card(
+//       data,
+//       '#card',
+//       () => {
+//         popupLightBox.open(data);
+//       },
+//       () => {
+//         popupDeleteConfirm.open();
+//       })
+//     cardsContainer.append(card.generateCard())
+//   },
+//   cardsContainer
+// )
+
+const section = new Section(()=>{}, cardsContainer)
 
 /* ---------- Работа с сервером (Api.js) ---------- */
 const api = new Api({
@@ -58,7 +60,9 @@ const api = new Api({
 
 /* ---------- Модальное окно: ConfirmDelete () ---------- */
 
-const popupDeleteConfirm = new PopupWithSubmit(confirmPopUp);
+const popupDeleteConfirm = new PopupWithSubmit(confirmPopUp, (data) => {
+console.log(data);
+});
 popupDeleteConfirm.setEventListeners();
 
 /* ---------- Модальное окно: Аккаунт (PopupWithForm.js + UserInfo.js) ---------- */
@@ -108,9 +112,10 @@ const popupCardForm = new PopupWithForm(
         () => { // III параметр — handleCardClick
           popupLightBox.open(cardObject);
         },
-        () => {
-          popupDeleteConfirm.open();
-          this._removeCard(); // IV параметр — коллбэк удаления
+        (cardObject) => {
+          popupDeleteConfirm.open(cardObject);
+
+          // this._removeCard(); // IV параметр — коллбэк удаления
         }, `7f651893ffa284663c078177`)
         const cardElement = card.generateCard() // создаем карточку
         popupCardForm.close() // закрываем форму
@@ -159,8 +164,8 @@ api.getCards()
         popupLightBox.open(card);
       },
       () => {
-        popupDeleteConfirm.open();
-        this._removeCard(); // IV параметр — коллбэк удаления
+        popupDeleteConfirm.open(cardInstance);
+        // this._removeCard(); // IV параметр — коллбэк удаления
     },`7f651893ffa284663c078177`)
     const cardElement = cardInstance.generateCard() // создаем карточку
     section.addItem(cardElement); // добавляем карточку в section
@@ -204,5 +209,3 @@ accountFormValidator.enableValidation(); // ВКЛ валидацию для Acc
 
 const placeFormValidator = new FormValidator(config, placeForm);
 placeFormValidator.enableValidation(); // ВКЛ валидацию для Place
-
-

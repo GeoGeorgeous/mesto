@@ -33,7 +33,7 @@ export default class Card {
     // Добавляем слушатель на кнопку корзины:
     this._deleteButton.addEventListener('click', () => {
       this._handleDeleteClick();
-      this._removeCard();
+      // this._removeCard();
     });
 
     // Добавляем слушатель lightbox:
@@ -68,7 +68,7 @@ export default class Card {
     this._likeButton.classList.toggle('card__like-button_active');
   }
 
-  _removeCard() {
+  removeCard() {
     // Удаляет карточку
     this._cardElement.remove();
     this._cardElement = null;

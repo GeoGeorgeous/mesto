@@ -7,7 +7,7 @@ export default class Section {
     —— addItem(item): добавляет item в начало this.containerSelector
   */
 
-  constructor(renderer, containerElement){
+  constructor(renderer, containerElement) {
     // this._items = items;
     this._renderer = renderer;
     this._containerElement = containerElement;
