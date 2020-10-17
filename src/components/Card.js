@@ -1,13 +1,15 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteClick, userID) {
-    this._cardTitle = data.name;
-    this._cardImage = data.link;
-    this._cardLikes = data.likes.length;
+  constructor(values, templateSelector) {
+    this._cardTitle = values.data.name; // Название карточки
+    this._cardImage = values.data.link; // Ссылка на изображение
+    this._cardLikes = values.data.likes; // Массив лайков
+    this._cardOwner = values.data.owner; // ID владельца карточки
     this._templateSelector = templateSelector;
-    this._handleCardClick = handleCardClick;
-    this._handleDeleteClick = handleDeleteClick;
-    this._owner = data.owner;
-    this._userID = userID;
+    this._handleCardClick = values.handleCardClick;
+    this._handleLikeClick = values.handleLikeClick;
+    this._handleDeleteClick = values.handleDeleteIconClick;
+
+    this._userID = values.myId;
   }
 
   _cloneTemplate() {
@@ -20,21 +22,11 @@ export default class Card {
   }
 
   _setEventListeners() {
-    // Получаем разметку кнопок лайка и корзины
-    this._likeButton = this._cardElement.querySelector('.card__like-button');
-    this._deleteButton = this._cardElement.querySelector('.card__delete-button');
-
     // Добаляем слушатель на кнопку лайка:
-    this._likeButton.addEventListener('click', () => {
-      this._likeCard();
-
-    })
+    this._likeButton.addEventListener('click', this._handleLikeClick)
 
     // Добавляем слушатель на кнопку корзины:
-    this._deleteButton.addEventListener('click', () => {
-      this._handleDeleteClick();
-      // this._removeCard();
-    });
+    this._deleteButton.addEventListener('click', this._handleDeleteClick);
 
     // Добавляем слушатель lightbox:
     this._cardImageElement.addEventListener('click', this._handleCardClick);
@@ -43,28 +35,54 @@ export default class Card {
   generateCard() {
     this._cloneTemplate(); // получаем разметку пустой карточки из template
 
+    // Получаем разметку кнопок лайка и корзины
+    this._likeButton = this._cardElement.querySelector('.card__like-button');
+    this._deleteButton = this._cardElement.querySelector('.card__delete-button');
+
     // Находим разметку изображения и заголовка:
     this._cardImageElement = this._cardElement.querySelector('.card__image');
     this._cardTitleElement = this._cardElement.querySelector('.card__title');
     this._cardLikesElement = this._cardElement.querySelector('.card__likes');
+
     // Подставляем название и изображение и alt в пустую карточку:
     this._cardImageElement.src = this._cardImage;
     this._cardTitleElement.textContent = this._cardTitle;
     this._cardImageElement.alt = this._cardTitle;
-    this._cardLikesElement.textContent = this._cardLikes;
+
+    // Подставляем количество лайков:
+    this.renderAmountOfLikes(this._cardLikes.length);
+
+    // Подставляем нажатый лайк:
+    if (this._youLiked()) {
+      this.toggleLikeBtnState();
+    }
+
+
     // Навешиваем слушателей событий:
     this._setEventListeners();
+
     // // Удаляем корзину на чужих карточках:
     this._checkOwner();
     if (!this._yourCard) {
       this._deleteButton.remove();
     }
+
     // Возвращаем готовую карточку
     return this._cardElement;
   }
 
-  _likeCard() {
-    // Ставит лайк
+  renderAmountOfLikes(source) {
+    this._cardLikesElement.textContent = source;
+  }
+
+  _youLiked() {
+    return this._cardLikes.some(cardLover => {
+      return (cardLover._id === this._userID)
+    });
+  }
+
+  toggleLikeBtnState() {
+    // Ставит / удаляет лайк
     this._likeButton.classList.toggle('card__like-button_active');
   }
 
@@ -75,7 +93,7 @@ export default class Card {
   }
 
   _checkOwner() {
-    this._owner._id === this._userID
+    this._cardOwner._id === this._userID
     ? this._yourCard = true
     : this._yourCard = false;
   }

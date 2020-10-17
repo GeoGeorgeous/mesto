@@ -31,26 +31,6 @@ import PopupWithImage from '../components/PopupWithImage.js'
 import UserInfo from '../components/UserInfo.js'
 import PopupWithSubmit from '../components/PopupWithSubmit.js'
 
-
-/* ---------- Section (Section.js) ---------- */
-// const section = new Section(
-//   (cardElement) => {
-//     const card = new Card(
-//       data,
-//       '#card',
-//       () => {
-//         popupLightBox.open(data);
-//       },
-//       () => {
-//         popupDeleteConfirm.open();
-//       })
-//     cardsContainer.append(card.generateCard())
-//   },
-//   cardsContainer
-// )
-
-const section = new Section(()=>{}, cardsContainer)
-
 /* ---------- Работа с сервером (Api.js) ---------- */
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-16',
@@ -61,30 +41,89 @@ const api = new Api({
 });
 
 
+/* ---------- Section (Section.js) ---------- */
+const section = new Section( ()=>{}, cardsContainer)
+
+
+/* ---------- setBtnText: текст на кнопке по время загрузки ---------- */
+
+
+function setBtnText(evt, text) { // принимает evt субмита для нахождения кнопки
+  const button = evt.target.querySelector('.popup__save-button');
+  button.textContent = text;
+}
+
+
+/* ---------- createCardInstance —— Создание экземпляра карточки ---------- */
+
+// Функция принимает параметр объекта карточки и возращает новый экземпляр Card
+
+function createCardInstance(card) {
+  const cardInstance = new Card (
+    { // I параметр — объект с данными и логикой:
+      data: card, // Объект карточки
+      handleCardClick: () => { popupLightBox.open(card); },  // Коллбэк клика по карточке
+      handleLikeClick: () => { // Коллбэк клика по кнопке лайк:
+        // Проверим, лайкали ли мы ее уже?
+        cardInstance._youLiked()
+        // Если да, то лайк надо убрать:
+        ? api.removeLike(card)
+        .then(res => res.json())
+        .then(res => {
+          cardInstance._cardLikes = res.likes;
+          cardInstance.renderAmountOfLikes(res.likes.length)
+        })
+        .then(cardInstance.toggleLikeBtnState())
+        // Если нет, то лайк надо поставить:
+        : api.setLike(card)
+        .then(res => res.json())
+        .then(res => {
+          cardInstance._cardLikes = res.likes;
+          cardInstance.renderAmountOfLikes(res.likes.length)
+        })
+        .then(cardInstance.toggleLikeBtnState())
+       },
+      handleDeleteIconClick: () => { // Коллбэк клика по корзине
+        popupDeleteConfirm.open(cardInstance, card)
+       },
+      myId: `7f651893ffa284663c078177`
+    },
+    '#card'); // II параметр — селектор карточки)
+    return cardInstance;
+}
+
+
+
 
 /* ---------- Модальное окно: ConfirmDelete () ---------- */
 
 const popupDeleteConfirm = new PopupWithSubmit(
   confirmPopUp,
-  {submitCallback: (data) => {
-    console.log(data);
-    confirmPopUp.close();
-    },
-  closeCallback: (data) => {
-    console.log(data);
-  }
-})
+  // коллбэк сабмита (удаления карточки)
+  (cardElement, cardObj, evt) => {
+    setBtnText(evt, 'Сохранение...')
+    api.deleteCard(cardObj)
+    .then(cardElement.removeCard())
+    .then(() => {
+      popupDeleteConfirm.close() // закрываем попап
+      setBtnText(evt, 'Да')
+    })
+  })
 popupDeleteConfirm.setEventListeners();
 
 /* ---------- Смена аватара ---------- */
 
 const popupChangeAvatar = new PopupWithForm (
   avatarPopUp,
-  (data) => {
+  (data, evt) => {
+    setBtnText(evt, 'Сохранение...')
     api.setAvatar(data.link)
-    .then(res => res.json())
+    .then( res => res.json())
     .then( (res) => {userElements.avatar.src = res.avatar})
-    .then(popupChangeAvatar.close())
+    .then( () => {
+      popupChangeAvatar.close()
+      setBtnText(evt, 'Сохранить')
+    })
     .catch( (err) => console.log(err) )
   },
   () => {
@@ -104,13 +143,17 @@ const userInfo = new UserInfo(userElements);
 
 const popupProfileForm = new PopupWithForm(
   accountPopUp, // I параметр — форма
-  (data) => { // II параметр - коллбэк субмита
+  (data, evt) => { // II параметр - коллбэк субмита
+    setBtnText(evt, 'Сохранение...')
     api.setUser(data)
     .then(res => res.json())
     .then(res => {
       userInfo.setUserInfo({name: res.name, about: res.about, avatar: res.avatar}); // ставим новые данные
     })
-    popupProfileForm.close() // Закрываем форму
+    .then( () => {
+      popupProfileForm.close()
+      setBtnText(evt, 'Сохранить') // Закрываем форму
+    })
   },
   () => {
     accountFormValidator.removeErrors();
@@ -127,7 +170,7 @@ accountEditButton.addEventListener('click', () => {
 });
 
 
-/* ---------- Модальное окно: LightBox (PopupWithImage.js) ---------- */
+/* ---------- Модальное окно: LightBox ---------- */
 
 const popupLightBox = new PopupWithImage(lightbox);
 popupLightBox.setEventListeners();
@@ -137,29 +180,23 @@ popupLightBox.setEventListeners();
 
 const popupCardForm = new PopupWithForm(
   placePopUp, // I параметр — форма
-  (data) => { // II параметр - коллбэк субмита
+  (data, evt) => { // II параметр - коллбэк субмита
+    setBtnText(evt, 'Сохранение...');
     const newCard = {name, link}; // новая карточка Место
     newCard.name = data.title;
     newCard.link = data.link;
     api.uploadCard(newCard) // Добаляем карточку на сервер
     .then(res => res.json())
     .then(cardObject => {
-      const card = new Card(
-        // создаем новый экземпляр Card
-        cardObject, // I параметр — объект с данными карточки
-        '#card', // II параметр — селектор карточки
-        () => { // III параметр — handleCardClick
-          popupLightBox.open(cardObject);
-        },
-        (cardObject) => {
-          popupDeleteConfirm.open(cardObject);
-
-          // this._removeCard(); // IV параметр — коллбэк удаления
-        }, `7f651893ffa284663c078177`)
-        const cardElement = card.generateCard() // создаем карточку
-        popupCardForm.close() // закрываем форму
-        section.addItem(cardElement); // добавляем карточку в cardSection
-        })
+      const cardElement =
+      createCardInstance(cardObject)
+      .generateCard();
+      popupCardForm.close() // закрываем форму
+      section.addItem(cardElement); // добавляем карточку в section
+      })
+    .then(() => {
+      setBtnText(evt, 'Сохранить');
+    })
   },
   () => {
     placeFormValidator.removeErrors();
@@ -184,29 +221,21 @@ api.getUser()
 // userInfo.setUserInfo(initialUser);
 
 
-// ---------- Дефолтные карточки (Section.js) ----------
+// ---------- Загрузка карточек с сервера ----------
+
 
 api.getCards()
-.then(res => { return res.json() })
-.then(data => {
-  const serverCards = data.reverse();
-  console.log(serverCards);
-  serverCards.forEach(card => {
-    const cardInstance = new Card(
-      // создаем новый экземпляр Card
-      card, // I параметр — объект с данными карточки
-      '#card', // II параметр — селектор карточки
-      () => { // III параметр — handleCardClick
-        popupLightBox.open(card);
-      },
-      () => {
-        popupDeleteConfirm.open(cardInstance);
-        // this._removeCard(); // IV параметр — коллбэк удаления
-    },`7f651893ffa284663c078177`)
-    const cardElement = cardInstance.generateCard() // создаем карточку
+.then(res => res.json())
+.then(res => {return res.reverse()}) // Переворачиваем массив карточек
+.then(resReversed => {
+  resReversed.forEach( (card) => {
+    const cardElement =
+    createCardInstance(card)
+    .generateCard();
     section.addItem(cardElement); // добавляем карточку в section
   })
 })
+
 
 
 /* ---------- Валидация Форм (FormValidator.js) ---------- */

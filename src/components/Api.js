@@ -65,15 +65,15 @@ export default class Api {
     });
   }
 
-  setLike() {
-    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+  setLike(card) {
+    return fetch(`${this._baseUrl}/cards/likes/${card._id}`, {
       method: 'PUT',
       headers: this._headers
     });
   }
 
-  removeLike() {
-    return fetch(`${this._baseUrl}/cards/${card._id}`, {
+  removeLike(card) {
+    return fetch(`${this._baseUrl}/cards/likes/${card._id}`, {
       method: 'DELETE',
       headers: this._headers
     });
