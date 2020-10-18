@@ -11,7 +11,6 @@ export default class Api {
   constructor({baseUrl, headers}) {
     this._baseUrl = baseUrl;
     this._headers = headers;
-    this._authorization = '25068d5b-79ef-423f-8b22-b9922c31ad6c';
   }
 
   _fetchButCatch(url, init) {
@@ -20,7 +19,7 @@ export default class Api {
       if (response.ok) {
         return response.json()
       }
-      return Promise.reject(`Ошибка ${response.status}: ${response.statusText}`)
+      return Promise.reject(new Error(`Ошибка: ${res.status}`))
     })
   }
 

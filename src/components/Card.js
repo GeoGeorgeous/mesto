@@ -2,7 +2,7 @@ export default class Card {
   constructor(values, templateSelector) {
     this._cardTitle = values.data.name; // Название карточки
     this._cardImage = values.data.link; // Ссылка на изображение
-    this._cardLikes = values.data.likes; // Массив лайков
+    this.cardLikes = values.data.likes; // Массив лайков
     this._cardOwner = values.data.owner; // ID владельца карточки
     this._templateSelector = templateSelector;
     this._handleCardClick = values.handleCardClick;
@@ -29,7 +29,8 @@ export default class Card {
     this._deleteButton.addEventListener('click', this._handleDeleteClick);
 
     // Добавляем слушатель lightbox:
-    this._cardImageElement.addEventListener('click', this._handleCardClick);
+    this._cardImageElement.addEventListener('click',
+    () => {this._handleCardClick({name: this._cardTitle, link: this._cardImage})});
   }
 
   generateCard() {
@@ -50,13 +51,12 @@ export default class Card {
     this._cardImageElement.alt = this._cardTitle;
 
     // Подставляем количество лайков:
-    this.renderAmountOfLikes(this._cardLikes.length);
+    this.renderAmountOfLikes(this.cardLikes.length);
 
     // Подставляем нажатый лайк:
     if (this._youLiked()) {
       this.toggleLikeBtnState();
     }
-
 
     // Навешиваем слушателей событий:
     this._setEventListeners();
@@ -76,7 +76,7 @@ export default class Card {
   }
 
   _youLiked() {
-    return this._cardLikes.some(cardLover => {
+    return this.cardLikes.some(cardLover => {
       return (cardLover._id === this._userID)
     });
   }

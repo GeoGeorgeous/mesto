@@ -66,14 +66,14 @@ function createCardInstance(card) {
   const cardInstance = new Card (
     { // I параметр — объект с данными и логикой:
       data: card, // Объект карточки
-      handleCardClick: () => { popupLightBox.open(card); },  // Коллбэк клика по карточке
+      handleCardClick: (lightCard) => { popupLightBox.open(lightCard); },  // Коллбэк клика по карточке
       handleLikeClick: () => { // Коллбэк клика по кнопке лайк:
         // Проверим, лайкали ли мы ее уже?
         cardInstance._youLiked()
         // Если да, то лайк надо убрать:
         ? api.removeLike(card)
         .then(res => {
-          cardInstance._cardLikes = res.likes;
+          cardInstance.cardLikes = res.likes;
           cardInstance.renderAmountOfLikes(res.likes.length)
         })
         .then(cardInstance.toggleLikeBtnState())
@@ -81,7 +81,7 @@ function createCardInstance(card) {
         // Если нет, то лайк надо поставить:
         : api.setLike(card)
         .then(res => {
-          cardInstance._cardLikes = res.likes;
+          cardInstance.cardLikes = res.likes;
           cardInstance.renderAmountOfLikes(res.likes.length)
         })
         .then(cardInstance.toggleLikeBtnState())
@@ -121,7 +121,7 @@ const popupChangeAvatar = new PopupWithForm (
   (data, evt) => {
     setBtnText(evt, 'Сохранение...')
     api.setAvatar(data.link)
-    .then( (res) => {userElements.avatar.src = res.avatar})
+    .then( (res) => {userInfo.setUserAvatar(res.avatar)})
     .then( () => {
       popupChangeAvatar.close()
       setBtnText(evt, 'Сохранить')
