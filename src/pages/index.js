@@ -217,11 +217,10 @@ Promise.all([
   api.getUser(),
   api.getCards()
 ])
-  .then(values => {return {user: values[0], cards: values[1]}; console.log(values) })
+  .then(values => {console.log('Подключено к серверу и работает!'); return {user: values[0], cards: values[1]}; console.log(values) })
   .then(data => {userInfo.setUserInfo(data.user); return data})
   .then(data => {return data.cards.reverse()}) // Переворачиваем массив карточек
   .then(resReversed => {section.render(resReversed)})
-  .then(console.log('Подключено к серверу и работает!'))
   .catch((error) => console.log(`Ошибка при попытке загрузить данные пользователя и карточки: ${error}`))
 
 
