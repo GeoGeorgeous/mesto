@@ -38,12 +38,19 @@ const api = new Api({
 });
 
 
-/* ---------- Section (Section.js) ---------- */
-const section = new Section( ()=>{}, cardsContainer)
+/* ---------- Создание класса секции с карточками (Section.js) ---------- */
+const section = new Section({
+  renderer: (element) => {
+    const cardElement =
+    createCardInstance(element)
+    .generateCard();
+    section.addItem(cardElement);
+  },
+  containerElement : cardsContainer
+})
 
 
-/* ---------- setBtnText: текст на кнопке по время загрузки ---------- */
-
+/* ---------- Функция, меняющая текст на кнопках в моменты загрузки. ---------- */
 
 function setBtnText(evt, text) { // принимает evt субмита для нахождения кнопки
   const button = evt.target.querySelector('.popup__save-button');
@@ -51,7 +58,7 @@ function setBtnText(evt, text) { // принимает evt субмита для
 }
 
 
-/* ---------- createCardInstance —— Создание экземпляра карточки ---------- */
+/* ---------- Функция, создающая новые экземпляры карточек. ---------- */
 
 // Функция принимает параметр объекта карточки и возращает новый экземпляр Card
 
@@ -70,6 +77,7 @@ function createCardInstance(card) {
           cardInstance.renderAmountOfLikes(res.likes.length)
         })
         .then(cardInstance.toggleLikeBtnState())
+        .catch(error => console.log(`Ошибка при удалении лайка: ${error}`))
         // Если нет, то лайк надо поставить:
         : api.setLike(card)
         .then(res => {
@@ -77,6 +85,7 @@ function createCardInstance(card) {
           cardInstance.renderAmountOfLikes(res.likes.length)
         })
         .then(cardInstance.toggleLikeBtnState())
+        .catch(error => console.log(`Ошибка при добавлении лайка: ${error}`))
        },
       handleDeleteIconClick: () => { // Коллбэк клика по корзине
         popupDeleteConfirm.open(cardInstance, card)
@@ -88,9 +97,7 @@ function createCardInstance(card) {
 }
 
 
-
-
-/* ---------- Модальное окно: ConfirmDelete () ---------- */
+/* ---------- Модальное окно подтверждения удаления ---------- */
 
 const popupDeleteConfirm = new PopupWithSubmit(
   confirmPopUp,
@@ -103,10 +110,11 @@ const popupDeleteConfirm = new PopupWithSubmit(
       popupDeleteConfirm.close() // закрываем попап
       setBtnText(evt, 'Да')
     })
+    .catch(error => console.log(`Ошибка при удалении карточки: ${error}`))
   })
 popupDeleteConfirm.setEventListeners();
 
-/* ---------- Смена аватара ---------- */
+/* ---------- Модальное окно смены аватара ---------- */
 
 const popupChangeAvatar = new PopupWithForm (
   avatarPopUp,
@@ -118,7 +126,7 @@ const popupChangeAvatar = new PopupWithForm (
       popupChangeAvatar.close()
       setBtnText(evt, 'Сохранить')
     })
-    .catch( (err) => console.log(err) )
+    .catch(error => console.log(`Ошибка при изменении аватара: ${error}`))
   },
   () => {
     avatarFormValidator.removeErrors();}
@@ -131,7 +139,7 @@ changeAvatarBtn.addEventListener('click', () => {
   }
 )
 
-/* ---------- Редактирование профиля ---------- */
+/* ---------- Модальное окно редактирования профиля и создание класса UserInfo ---------- */
 
 const userInfo = new UserInfo(userElements);
 
@@ -147,6 +155,7 @@ const popupProfileForm = new PopupWithForm(
       popupProfileForm.close()
       setBtnText(evt, 'Сохранить') // Закрываем форму
     })
+    .catch(error => console.log(`Ошибка при изменении данных профиля: ${error}`))
   },
   () => {
     accountFormValidator.removeErrors();
@@ -163,13 +172,13 @@ accountEditButton.addEventListener('click', () => {
 });
 
 
-/* ---------- Модальное окно: LightBox ---------- */
+/* ---------- Модальное окно LightBox ---------- */
 
 const popupLightBox = new PopupWithImage(lightbox);
 popupLightBox.setEventListeners();
 
 
-/* ---------- Модальное окно: Место (PopupWithForm.js + Card.js + PopupWithImage.js) ---------- */
+/* ---------- Модальное окно добавления новой карточки) ---------- */
 
 const popupCardForm = new PopupWithForm(
   placePopUp, // I параметр — форма
@@ -179,16 +188,15 @@ const popupCardForm = new PopupWithForm(
     newCard.name = data.title;
     newCard.link = data.link;
     api.uploadCard(newCard) // Добаляем карточку на сервер
-    .then(cardObject => {
-      const cardElement =
-      createCardInstance(cardObject)
-      .generateCard();
-      popupCardForm.close() // закрываем форму
-      section.addItem(cardElement); // добавляем карточку в section
-      })
-    .then(() => {
-      setBtnText(evt, 'Сохранить');
-    })
+      .then(cardObject => {
+        const cardElement =
+        createCardInstance(cardObject)
+        .generateCard();
+        popupCardForm.close() // закрываем форму
+        section.addItem(cardElement); // добавляем карточку в section
+        })
+    .then(() => {setBtnText(evt, 'Сохранить');})
+    .catch((error) => console.log(`Ошибка при добавлении карточки: ${error}`))
   },
   () => {
     placeFormValidator.removeErrors();
@@ -202,29 +210,19 @@ placeAddButton.addEventListener('click', () => {
 });
 
 
-// ---------- Дефолтный аккаунт (UserInfo.js) ----------
-
-api.getUser()
-.then(data => {
-  userInfo.setUserInfo(data);
-})
-// const userInfo = new UserInfo(userElements);
-// userInfo.setUserInfo(initialUser);
+// ---------- API: Загрузка данных пользователя и карточек с сервера: ----------
 
 
-// ---------- Загрузка карточек с сервера ----------
-
-
-api.getCards()
-.then(res => {return res.reverse()}) // Переворачиваем массив карточек
-.then(resReversed => {
-  resReversed.forEach( (card) => {
-    const cardElement =
-    createCardInstance(card)
-    .generateCard();
-    section.addItem(cardElement); // добавляем карточку в section
-  })
-})
+Promise.all([
+  api.getUser(),
+  api.getCards()
+])
+  .then(values => {return {user: values[0], cards: values[1]}; console.log(values) })
+  .then(data => {userInfo.setUserInfo(data.user); return data})
+  .then(data => {return data.cards.reverse()}) // Переворачиваем массив карточек
+  .then(resReversed => {section.render(resReversed)})
+  .then(console.log('Подключено к серверу и работает!'))
+  .catch((error) => console.log(`Ошибка при попытке загрузить данные пользователя и карточки: ${error}`))
 
 
 
