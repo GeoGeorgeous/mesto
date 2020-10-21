@@ -54,7 +54,7 @@ export default class Card {
     this.renderAmountOfLikes(this.cardLikes.length);
 
     // Подставляем нажатый лайк:
-    if (this._youLiked()) {
+    if (this.youLiked()) {
       this.toggleLikeBtnState();
     }
 
@@ -75,7 +75,7 @@ export default class Card {
     this._cardLikesElement.textContent = source;
   }
 
-  _youLiked() {
+  youLiked() {
     return this.cardLikes.some(cardLover => {
       return (cardLover._id === this._userID)
     });

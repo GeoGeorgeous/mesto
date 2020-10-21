@@ -69,7 +69,7 @@ function createCardInstance(card) {
       handleCardClick: (lightCard) => { popupLightBox.open(lightCard); },  // Коллбэк клика по карточке
       handleLikeClick: () => { // Коллбэк клика по кнопке лайк:
         // Проверим, лайкали ли мы ее уже?
-        cardInstance._youLiked()
+        cardInstance.youLiked()
         // Если да, то лайк надо убрать:
         ? api.removeLike(card)
         .then(res => {
