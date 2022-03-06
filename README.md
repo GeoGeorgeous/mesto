@@ -50,8 +50,15 @@ Users can change the name, profile description and profile image, as well as pub
 
 ### Installation
 
-Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/GeoGeorgeous/russian-travel.git
    ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run NPM script
+  1. 23 
 
+  
