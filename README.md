@@ -59,6 +59,17 @@ Users can change the name, profile description and profile image, as well as pub
    npm install
    ```
 3. Run NPM script
-  1. 23 
+
+    Run app in development mode:
+      ```sh
+      npm run dev
+      ```
+    Start a production build:
+      ```sh
+      npm run build
+      ```
+
+  > App requests data from https://mesto.nomoreparties.co/ REST API
+
 
   
