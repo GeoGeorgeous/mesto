@@ -1,35 +1,55 @@
-# Проект 4: Mesto Russia
-**[Перейти на сайт](https://geogeorgeous.github.io/mesto/)**
+
+<p align="center" width="100%">
+    <a href="https://geogeorgeous.github.io/mesto/)"><img width="66%" src="./README_COVER.png"></a><br>
+       🚀 <a href="https://geogeorgeous.github.io/mesto/)">View Live</a>
+</p>
 
 
-### О чем проект?
+### About the project
+**Mesto** is my first Javascript application built for educational purposes while studying at [Practicum by Yandex](https://praktikum.yandex.ru/). 
 
-Фотогаллерея (Instagram-like) с самыми живописными местами России.
+Users can change the name, profile description and profile image, as well as publish their own cards with images of places. Unnecessary cards can always be deleted, and the most beautiful ones can be liked.
 
-У пользователей есть возможность менять имя, описание профиля и аватар, а также добавлять собственные карточки с изображениями мест. Ненужные карточки всегда можно удалить, а самым красивым — поставить лайк.
+### Features
+- **Like** others' cards and **upload** your own
+- **Change account data:** username, description and profile image
+- **Delete** cards you don't like (only your own)
+- **Fullscreen mode:** open any card in full-screen mode by clicking on the image. 
+- **Server storage:** cards' and users' data is stored on the REST-API server and won’t be deleted on page refresh.
+- **Form live validation:** errors will alert you if you enter something wrong in the input field, and will prohibit the form submitting.
+- **Adaptive and responsive:** The layout is displayed properly on any screens: from mobile to widescreen.
+- **Error handling:** If there are problems with the server, the corresponding errors are displayed in the console.
+- **Confirmation popups:** confirm the card deletion to avoid accidents
 
-Есть возможность открыть любую карточку в полноэкранном режиме, кликнув по изображению.
-
-Информация о карточках и пользователях хранится на сервере.
-
-### Какие технологии использованы?
-* Адаптивная верстка
-* Grid и Flexbox layouts
-* ООП, Инкапсуляция и Наследование
-* Деструктуризация
-* Слабое связывание между классами
-* Webpack для сборки проекта и деплоя
-* Асинхронность: Promise
-* API
-* Fetch запросы, JSON, then(), catch() и finally()
-
-### Фичи
-1. Предусмотрена лайв-валидация заполнения форм: ошибки подскажут, если вы введете в поле вода что-то не то, и запретит отправку формы.
-2. Проект отображается корректно на любых экранах: начиная с мобильных и заканчивая широкоугольными.
-3. Кроме карточек пользователей, можно загружать свои собственные.
-4. Все данные сохраняются на сервере и не удаляются при обновлении страницы.
-5. При проблемах с сервером выводятся соответствующие ошибки в консоль.
-6. Предусмотрено подтверждение при удалении собственных карточек — чтобы не удалить их случайно. Чужие карточки удалить не получится.
+### Built With
+  - JavaScript (ES6)
+    - Asynchronous programming: Callbacks, Promises, fetch and Async / Await
+    - Object-oriented programming: using classes and following the basic concepts: encapsulation, abstraction, inheritance and polymorphism
+  - HTML & CSS
+    - Semantic and valid layout
+    - Grid and Flexbox
+    - Adaptive and responsive
+    - [BEM](https://en.bem.info/) ([BEM Nested](https://en.bem.info/methodology/filestructure/#nested))
+  - [Webpack 4](https://webpack.js.org/)
+    - [Babel](https://babeljs.io/)
+    - [PostCSS](https://postcss.org/)
+    - [autoprefixer](https://github.com/postcss/autoprefixer)
+    - [cssnano](https://github.com/cssnano/cssnano)
+    - [css-loader](https://webpack.js.org/loaders/css-loader/)
+    - [mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin/)
+    - [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin)
 
 
-**Это мой первый проект с JavaScript <3**
+  - Git
+
+### Roadmap
+- [ ] Migrate to Webpack 5
+- [ ] Add English version
+
+### Installation
+
+Clone the repo
+   ```sh
+   git clone https://github.com/GeoGeorgeous/russian-travel.git
+   ```
+
