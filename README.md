@@ -1,7 +1,9 @@
 
+# Mesto
+
 <p align="center" width="100%">
     <a href="https://geogeorgeous.github.io/mesto/)"><img width="66%" src="./README_COVER.png"></a><br>
-       🚀 <a href="https://geogeorgeous.github.io/mesto/)">View Live</a>
+       🚀 <a href="https://geogeorgeous.github.io/mesto/">View Live</a> | <i>Images by <a href="https://unsplash.com/license ">Unsplash</a></i>
 </p>
 
 
