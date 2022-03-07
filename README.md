@@ -40,6 +40,8 @@ Users can change the name, profile description and profile image, as well as pub
     - [css-loader](https://webpack.js.org/loaders/css-loader/)
     - [mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin/)
     - [HtmlWebpackPlugin](https://github.com/jantimon/html-webpack-plugin)
+    - [html-loader](https://webpack.js.org/loaders/html-loader/)
+    - [CleanWebPackPlugin](https://github.com/johnagan/clean-webpack-plugin)
 
 
   - Git
