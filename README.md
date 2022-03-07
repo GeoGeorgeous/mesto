@@ -32,7 +32,7 @@ Users can change the name, profile description and profile image, as well as pub
     - Grid and Flexbox
     - Adaptive and responsive
     - [BEM](https://en.bem.info/) ([BEM Nested](https://en.bem.info/methodology/filestructure/#nested))
-  - [Webpack 4](https://webpack.js.org/)
+  - [Webpack 5](https://webpack.js.org/)
     - [Babel](https://babeljs.io/)
     - [PostCSS](https://postcss.org/)
     - [autoprefixer](https://github.com/postcss/autoprefixer)
