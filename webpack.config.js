@@ -1,25 +1,43 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: 'production',
-  // devtool: 'source-map',
-  entry: { main: './src/pages/index.js' },
+  mode: 'development',
+  entry: './src/pages/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js'
   },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: {
+      directory: path.join(__dirname, '/dist'),
+    },
+    compress: true,
+    port: 8080,
+    open: true,
+    hot: true,
+  },
   module: {
     rules: [
       {
+        test: /\.html$/i,
+        loader: "html-loader",
+      },
+      {
         test: /\.js$/,
-        loader: 'babel-loader',
+        use: 'babel-loader',
         exclude: '/node_modules/'
       },
       {
+        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        type: 'asset/resource',
+      },
+      {
         test: /\.css$/,
-        loader: [
+        use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
@@ -30,24 +48,13 @@ module.exports = {
           'postcss-loader'
         ],
       },
-      {
-        test: /\.html$/,
-        loader: 'html-loader',
-      },
-      {
-        test: /.(png|svg|jpg|gif)$/,
-        loader: 'file-loader?name=./images/[name].[ext]'
-      },
-      {
-        test: /.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=./vendor/[name].[ext]',
-      }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: path.resolve(__dirname, './src/index.html'),
     }),
-    new MiniCssExtractPlugin()
+    new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin(),
   ]
 };

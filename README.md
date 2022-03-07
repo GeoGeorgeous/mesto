@@ -45,7 +45,7 @@ Users can change the name, profile description and profile image, as well as pub
   - Git
 
 ### Roadmap
-- [ ] Migrate to Webpack 5
+- [x] Migrate to Webpack 5
 - [ ] Add English version
 
 ### Installation

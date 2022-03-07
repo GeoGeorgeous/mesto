@@ -14,40 +14,30 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: '/node_modules/'
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        type: 'asset/resource',
       },
       {
         test: /\.css$/,
-        loader: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1
-            }
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1,
           },
-          'postcss-loader'
+        },
+        'postcss-loader',
         ],
       },
-      {
-        test: /\.html$/,
-        loader: 'html-loader',
-      },
-      {
-        test: /.(png|svg|jpg|gif)$/,
-        loader: 'file-loader?name=./images/[name].[ext]'
-      },
-      {
-        test: /.(eot|ttf|woff|woff2)$/,
-        loader: 'file-loader?name=./vendor/[name].[ext]',
-      }
-    ]
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: path.resolve(__dirname, './src/index.html'),
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
   ]
 };
