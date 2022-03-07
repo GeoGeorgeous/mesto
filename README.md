@@ -48,6 +48,7 @@ Users can change the name, profile description and profile image, as well as pub
 
 ### Roadmap
 - [x] Migrate to Webpack 5
+- [ ] Add Eslint
 - [ ] Add English version
 
 ### Installation
